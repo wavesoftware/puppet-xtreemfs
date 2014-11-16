@@ -1,0 +1,73 @@
+{
+  "name": "wavesoftware-xtreemfs",
+  "version": "0.1.0",
+  "author": "Krzysztof Suszyński",
+  "summary": "The XtreemFS module allows you to easily manage XtreemFS installation, volumes and mounts",
+  "license": "Apache 2.0",
+  "source": "git://github.com/wavesoftware/puppet-xtreemfs.git",
+  "project_page": "https://github.com/wavesoftware/puppet-xtreemfs",
+  "issues_url": "https://github.com/wavesoftware/puppet-xtreemfs/issues",
+  "operatingsystem_support": [
+    {
+      "operatingsystem": "RedHat",
+      "operatingsystemrelease": [
+        "5",
+        "6",
+        "7"
+      ]
+    },
+    {
+      "operatingsystem": "CentOS",
+      "operatingsystemrelease": [
+        "5",
+        "6",
+        "7"
+      ]
+    },
+    {
+      "operatingsystem": "OracleLinux",
+      "operatingsystemrelease": [
+        "5",
+        "6",
+        "7"
+      ]
+    },
+    {
+      "operatingsystem": "Scientific",
+      "operatingsystemrelease": [
+        "5",
+        "6",
+        "7"
+      ]
+    },
+    {
+      "operatingsystem": "Debian",
+      "operatingsystemrelease": [
+        "6",
+        "7"
+      ]
+    },
+    {
+      "operatingsystem": "Ubuntu",
+      "operatingsystemrelease": [
+        "10.04",
+        "12.04",
+        "14.04"
+      ]
+    }
+  ],
+  "requirements": [
+    {
+      "name": "pe",
+      "version_requirement": "3.x"
+    },
+    {
+      "name": "puppet",
+      "version_requirement": "3.x"
+    }
+  ],
+  "dependencies": [
+    {"name":"puppetlabs/stdlib","version_requirement":">=3.2.0"},
+    {"name":"puppetlabs/apt","version_requirement":">=1.1.0 <2.0.0"}
+  ]
+}

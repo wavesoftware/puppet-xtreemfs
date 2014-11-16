@@ -1,0 +1,4 @@
+fixtures:
+  repositories: {}
+  symlinks:
+    xtreemfs: "#{source_dir}"
