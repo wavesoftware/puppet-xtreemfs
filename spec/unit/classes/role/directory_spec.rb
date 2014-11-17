@@ -8,12 +8,11 @@ describe 'xtreemfs::role::directory', :type => :class do
         :lsbdistid                 => 'Ubuntu',
         :lsbdistcodename           => 'trusty',
         :osfamily                  => 'Debian',
-        :operatingsystemmajrelease => '14.04',
         :operatingsystemrelease    => '14.04',
         :fqdn                      => 'somehost.localdomain',
       }
     end
-    it { should compile }
+    it { should compile.with_all_deps }
     it { should contain_package('xtreemfs-server') }
     it { should contain_anchor('xtreemfs::repo') }
     it { should contain_exec('apt_update').that_comes_before('Anchor[xtreemfs::repo]') }
@@ -22,7 +21,7 @@ describe 'xtreemfs::role::directory', :type => :class do
         'ensure'     => 'present',
         'location'   => 'http://download.opensuse.org/repositories/home:/xtreemfs/xUbuntu_14.04',
         'repos'      => './',
-        'key_source' => 'http://download.opensuse.org/repositories/home:/xtreemfs/xUbuntu_14.04/Release.key',
+        'key_source' => 'http://download.opensuse.org/repositories/home:/xtreemfs/xUbuntu_14.04/Release.key'
       )
     end
     it do
@@ -30,7 +29,7 @@ describe 'xtreemfs::role::directory', :type => :class do
         'ensure'     => 'running',
         'enable'     => true,
         'hasrestart' => true,
-        'hasstatus'  => true,
+        'hasstatus'  => true
       )
     end
     context 'with params specified: install_packages => false' do
@@ -51,22 +50,21 @@ describe 'xtreemfs::role::directory', :type => :class do
       {
         :operatingsystem           => 'CentOS',
         :osfamily                  => 'RedHat',
-        :operatingsystemmajrelease => '7',
-        :operatingsystemrelease    => '7.0',
-        :fqdn                      => 'somehost.localdomain',
+        :operatingsystemrelease    => '7.0.1406',
+        :fqdn                      => 'somehost.localdomain'
       }
     end
-    it { should compile }
+    it { should compile.with_all_deps }
     it { should contain_package('xtreemfs-server') }
     it { should_not contain_exec('apt_update') }
     it { should_not contain_apt__source('xtreemfs') }
     it { should contain_anchor('xtreemfs::repo') }
     it do
       should contain_yumrepo('xtreemfs').with(
-        'ensure'   => 'present',
         'baseurl'  => 'http://download.opensuse.org/repositories/home:/xtreemfs/CentOS_7',
-        'gpgcheck' => true,
-        'gpgkey'   => "http://download.opensuse.org/repositories/home:/xtreemfs/CentOS_7/repodata/repomd.xml.key",
+        'gpgcheck' => 1,
+        'enabled'  => 1,
+        'gpgkey'   => "http://download.opensuse.org/repositories/home:/xtreemfs/CentOS_7/repodata/repomd.xml.key"
       ).that_comes_before('Anchor[xtreemfs::repo]')
     end
     it do
@@ -74,7 +72,7 @@ describe 'xtreemfs::role::directory', :type => :class do
         'ensure'     => 'running',
         'enable'     => true,
         'hasrestart' => true,
-        'hasstatus'  => true,
+        'hasstatus'  => true
       )
     end
     context 'with params specified: install_packages => false' do

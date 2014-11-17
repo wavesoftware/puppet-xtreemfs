@@ -8,12 +8,11 @@ describe 'xtreemfs::role::storage', :type => :class do
         :lsbdistid                 => 'Debian',
         :lsbdistcodename           => 'wheezy',
         :osfamily                  => 'Debian',
-        :operatingsystemmajrelease => '7',
         :operatingsystemrelease    => '7.0',
-        :fqdn                      => 'storage.localdomain',
+        :fqdn                      => 'storage.localdomain'
       }
     end
-    it { should compile }
+    it { should compile.with_all_deps }
     it { should contain_package('xtreemfs-server') }
     it { should contain_anchor('xtreemfs::repo') }
     it { should contain_exec('apt_update').that_comes_before('Anchor[xtreemfs::repo]') }
@@ -22,7 +21,7 @@ describe 'xtreemfs::role::storage', :type => :class do
         'ensure'     => 'present',
         'location'   => 'http://download.opensuse.org/repositories/home:/xtreemfs/Debian_7.0',
         'repos'      => './',
-        'key_source' => 'http://download.opensuse.org/repositories/home:/xtreemfs/Debian_7.0/Release.key',
+        'key_source' => 'http://download.opensuse.org/repositories/home:/xtreemfs/Debian_7.0/Release.key'
       )
     end
     it do
@@ -30,7 +29,7 @@ describe 'xtreemfs::role::storage', :type => :class do
         'ensure'     => 'running',
         'enable'     => true,
         'hasrestart' => true,
-        'hasstatus'  => true,
+        'hasstatus'  => true
       )
     end
     context 'with params specified: install_packages => false' do
@@ -55,7 +54,7 @@ describe 'xtreemfs::role::storage', :type => :class do
           'changes' => [ 
             'set dir_service.host storage.localdomain',
             'set object_dir /mnt/sdb1/objs' 
-          ],
+          ]
         )
       end
       it do
@@ -74,29 +73,29 @@ describe 'xtreemfs::role::storage', :type => :class do
         { :dir_service => 'dir.example.vm' }
       end
       it do 
-        should contain_class('xtreemfs::internal::configure::storage')
-          .with( 'dir_service' => 'dir.example.vm' )
+        should contain_class('xtreemfs::internal::configure::storage').with( 
+          'dir_service' => 'dir.example.vm'
+        )
       end
       it { should contain_augeas('xtreemfs::configure::osd').with(
         'context' => '/files/etc/xos/xtreemfs/osdconfig.properties',
         'changes' => [ 
           'set dir_service.host dir.example.vm',
           'set object_dir /var/lib/xtreemfs/objs' 
-        ],
+        ]
       ) }
       it 'should contains augeas[..::osd] that comes before Anchor[..::packages]' do
-        should contain_augeas('xtreemfs::configure::osd')
-          .that_comes_before('Anchor[xtreemfs::packages]')
+        should contain_augeas('xtreemfs::configure::osd').that_comes_before('Anchor[xtreemfs::packages]')
       end
       it 'should contains augeas[..::osd] that notifies Anchor[..::configure]' do
-        should contain_augeas('xtreemfs::configure::osd')
-          .that_notifies('Anchor[xtreemfs::configure]')
+        should contain_augeas('xtreemfs::configure::osd').that_notifies('Anchor[xtreemfs::configure]')
       end
     end
     context 'with default params' do
       it do 
-        should contain_class('xtreemfs::internal::configure::storage')
-          .with( 'dir_service' => 'storage.localdomain' )
+        should contain_class('xtreemfs::internal::configure::storage').with( 
+          'dir_service' => 'storage.localdomain'
+        )
       end
     end
   end
@@ -105,22 +104,21 @@ describe 'xtreemfs::role::storage', :type => :class do
       {
         :operatingsystem           => 'OracleLinux',
         :osfamily                  => 'RedHat',
-        :operatingsystemmajrelease => '6',
         :operatingsystemrelease    => '6.5',
-        :fqdn                      => 'storage.localdomain',
+        :fqdn                      => 'storage.localdomain'
       }
     end
-    it { should compile }
+    it { should compile.with_all_deps }
     it { should contain_package('xtreemfs-server') }
     it { should_not contain_exec('apt_update') }
     it { should_not contain_apt__source('xtreemfs') }
     it { should contain_anchor('xtreemfs::repo') }
     it do
       should contain_yumrepo('xtreemfs').with(
-        'ensure'   => 'present',
         'baseurl'  => 'http://download.opensuse.org/repositories/home:/xtreemfs/CentOS_6',
-        'gpgcheck' => true,
-        'gpgkey'   => "http://download.opensuse.org/repositories/home:/xtreemfs/CentOS_6/repodata/repomd.xml.key",
+        'gpgcheck' => 1,
+        'enabled'  => 1,
+        'gpgkey'   => "http://download.opensuse.org/repositories/home:/xtreemfs/CentOS_6/repodata/repomd.xml.key"
       ).that_comes_before('Anchor[xtreemfs::repo]')
     end
     it do
@@ -128,7 +126,7 @@ describe 'xtreemfs::role::storage', :type => :class do
         'ensure'     => 'running',
         'enable'     => true,
         'hasrestart' => true,
-        'hasstatus'  => true,
+        'hasstatus'  => true
       )
     end
   end

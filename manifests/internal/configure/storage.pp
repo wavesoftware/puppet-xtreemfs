@@ -18,7 +18,7 @@ class xtreemfs::internal::configure::storage (
     ensure => 'directory',
     owner  => 'xtreemfs',
     group  => 'xtreemfs',
-    before  => Anchor[$xtreemfs::internal::workflow::packages],
-    notify  => Anchor[$xtreemfs::internal::workflow::configure],
+    before => Anchor[$xtreemfs::internal::workflow::packages],
+    notify => Anchor[$xtreemfs::internal::workflow::configure],
   }
 }

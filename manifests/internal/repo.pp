@@ -8,9 +8,9 @@ class xtreemfs::internal::repo {
   case $::osfamily {
     'RedHat': {
       yumrepo { 'xtreemfs':
-        ensure   => 'present',
+        enabled  => 1,
         baseurl  => $repo,
-        gpgcheck => true,
+        gpgcheck => 1,
         gpgkey   => "${repo}/repodata/repomd.xml.key",
         before   => Anchor[$xtreemfs::internal::workflow::repo],
       }

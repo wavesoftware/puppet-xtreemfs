@@ -3,6 +3,8 @@ xtreemfs
 
 Work in progres!!!
 
+**Build Status:** Master [![Build Status](https://travis-ci.org/wavesoftware/puppet-xtreemfs.png?branch=master)](https://travis-ci.org/wavesoftware/puppet-xtreemfs) Develop: [![Build Status](https://travis-ci.org/wavesoftware/puppet-xtreemfs.png?branch=develop)](https://travis-ci.org/wavesoftware/puppet-xtreemfs)
+
 Table of Contents
 -----------------
 
@@ -16,6 +18,7 @@ Table of Contents
     * [Replication](#replication)
     * [Automatic replication](#automatic-replication)
 5. [Tests - how to perform unit and acceptance tests](#tests)
+6. [Contributing - how to send your work?](#contributing)
 
 
 Overview
@@ -85,7 +88,7 @@ Storage node(s)
 ```puppet
 class { 'xtreemfs::role::storage':
   dir_service => 'dir.vagrant.dev',
-  object_dir  => '/mnt/sdb1/objs',
+  object_dir  => '/mnt/sdb1/xtreem', # actual object will be in: /mnt/sdb1/xtreem/objs 
 }
 ```
 
@@ -128,7 +131,8 @@ To replicate an existing file for ex.: `/mnt/xtreemfs/centos7.iso` inside the Xt
 
 ```puppet
 xtreemfs::replicate { '/mnt/xtreemfs/centos7.iso':
-  policy => 'WqRq',
+  policy  => 'WqRq',
+  factor  => 2,      # Required storage nodes
 }
 ```
 
@@ -191,3 +195,17 @@ To run the tests on different operating systems, see the sets available in .node
 ```shell
 RSPEC_SET=debian-607-x64 bundle exec rspec spec/acceptance
 ```
+
+###Contributing
+
+Contributions are welcome!
+
+To contribute, follow the standard [git flow](http://danielkummer.github.io/git-flow-cheatsheet/) of:
+
+1. Fork it
+1. Create your feature branch (`git checkout -b feature/my-new-feature`)
+1. Commit your changes (`git commit -am 'Add some feature'`)
+1. Push to the branch (`git push origin feature/my-new-feature`)
+1. Create new Pull Request
+
+Even if you can't contribute code, if you have an idea for an improvement please open an [issue](https://github.com/wavesoftware/xtreemfs/issues).

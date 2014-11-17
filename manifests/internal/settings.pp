@@ -3,14 +3,16 @@ class xtreemfs::internal::settings {
   
   $repobase = 'http://download.opensuse.org/repositories/home:/xtreemfs'
   
+  $majorrelease = regsubst($::operatingsystemrelease, '^(\d+)\..*', '\1')
+  
   $flavour = $::operatingsystem ? {
     'Debian'   => "Debian_${::operatingsystemrelease}",
     'Ubuntu'   => "xUbuntu_${::operatingsystemrelease}",
-    'RedHat'   => "RHEL_${::operatingsystemmajrelease}",
-    'Fedora'   => "Fedora_${::operatingsystemmajrelease}",
+    'RedHat'   => "RHEL_${majorrelease}",
+    'Fedora'   => "Fedora_${majorrelease}",
     'SLES'     => "SLE_${::operatingsystemrelease}",
     'OpenSuSE' => "openSUSE_${::operatingsystemrelease}",
-    /CentOS|OracleLinux|Scientific/ => "CentOS_${::operatingsystemmajrelease}",
-    default    => fail("Not supported operation system: ${::operatingsystem}")
+    /CentOS|OracleLinux|Scientific/ => "CentOS_${majorrelease}",
+    default    => fail("Not supported operation system: ${::operatingsystem} ${::operatingsystemrelease}")
   }
 }
