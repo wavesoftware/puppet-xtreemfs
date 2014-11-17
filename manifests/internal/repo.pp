@@ -22,6 +22,7 @@ class xtreemfs::internal::repo {
         repos      => './',
         key_source => "${repo}/Release.key",
       }
+      include apt
       include apt::update
       Exec['apt_update'] -> Anchor[$xtreemfs::internal::workflow::repo]
     }
