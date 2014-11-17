@@ -27,5 +27,6 @@ class xtreemfs::settings (
   include xtreemfs::internal::settings
   
   $flavour  = $xtreemfs::internal::settings::flavour
+  $key      = $xtreemfs::internal::settings::key
   $repobase = $xtreemfs::internal::settings::repobase
 }

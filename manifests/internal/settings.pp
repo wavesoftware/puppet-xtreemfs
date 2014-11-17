@@ -5,6 +5,8 @@ class xtreemfs::internal::settings {
   
   $majorrelease = regsubst($::operatingsystemrelease, '^(\d+)\..*', '\1')
   
+  $key = '07D6EA4F2FA7E736'
+  
   $flavour = $::operatingsystem ? {
     'Debian'   => "Debian_${::operatingsystemrelease}",
     'Ubuntu'   => "xUbuntu_${::operatingsystemrelease}",

@@ -21,6 +21,7 @@ describe 'xtreemfs::role::directory', :type => :class do
         'ensure'     => 'present',
         'location'   => 'http://download.opensuse.org/repositories/home:/xtreemfs/xUbuntu_14.04',
         'repos'      => './',
+        'release'    => '',
         'key_source' => 'http://download.opensuse.org/repositories/home:/xtreemfs/xUbuntu_14.04/Release.key'
       )
     end

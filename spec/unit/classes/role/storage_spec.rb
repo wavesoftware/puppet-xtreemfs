@@ -21,6 +21,7 @@ describe 'xtreemfs::role::storage', :type => :class do
         'ensure'     => 'present',
         'location'   => 'http://download.opensuse.org/repositories/home:/xtreemfs/Debian_7.0',
         'repos'      => './',
+        'release'    => '',
         'key_source' => 'http://download.opensuse.org/repositories/home:/xtreemfs/Debian_7.0/Release.key'
       )
     end

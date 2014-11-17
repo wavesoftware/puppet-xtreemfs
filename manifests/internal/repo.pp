@@ -17,10 +17,14 @@ class xtreemfs::internal::repo {
     }
     'Debian': {
       apt::source { 'xtreemfs':
-        ensure     => 'present',
-        location   => $repo,
-        repos      => './',
-        key_source => "${repo}/Release.key",
+        ensure      => 'present',
+        release     => '',
+        location    => $repo,
+        repos       => './',
+        include_src => false,
+        key         => $xtreemfs::settings::key,
+        key_source  => "${repo}/Release.key",
+        key_server  => undef,
       }
       include apt
       include apt::update
