@@ -6,7 +6,7 @@ class xtreemfs::internal::repo {
   $repo = "${xtreemfs::settings::repobase}/${xtreemfs::settings::flavour}"
   
   case $::osfamily {
-    'RedHat': {
+    /RedHat|Suse/: {
       yumrepo { 'xtreemfs':
         enabled  => 1,
         baseurl  => $repo,
