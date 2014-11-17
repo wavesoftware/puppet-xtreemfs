@@ -37,29 +37,43 @@ Setup
 
 ###Configuring the installation
 
-The main configuration you'll need to do will be around the `xtreemfs::server::directory`, `xtreemfs::server::metadata` and `xtreemfs::server::storage` classes. The default parameters are reasonable. 
+The main configuration you'll need to do will be around the `xtreemfs::role::directory`, `xtreemfs::role::metadata` and `xtreemfs::role::storage` classes. The default parameters are reasonable. 
 
 ####To manage a XtreemFS with sane defaults on one server:
 
 ```puppet
-include xtreemfs::server::directory
-include xtreemfs::server::metadata
-include xtreemfs::server::storage
+include xtreemfs::role::directory
+include xtreemfs::role::metadata
+include xtreemfs::role::storage
 ```
 
-####For a more customized configuration (on 4+ nodes)
+####Hiera configuration
+
+ - `xtreemfs::settings::dir_service`
+     - Provide an host to where metadata and storage nodes will be connecting, defaults: `$::fqdn`
+ - `xtreemfs::settings::object_dir`
+     - A direcory where storage nodes will hold their replicated data. Good idea is to provide a directory on secure RAID drive, defaults: `/var/lib/xtreemfs`
+ - `xtreemfs::settings::install_packages`
+     - If set to `true` will install packages of XtreemFS, defaults: `true`
+ - `xtreemfs::settings::add_repo`
+     - If set to `true` will add to system repository for XtreemFS, defaults: `true`
+ - `xtreemfs::settings::extra`
+     - An extra hash to provide other configuration options in form exactlly like: http://www.xtreemfs.org/xtfs-guide-1.5/index.html#tth_sEc3.2.6    
+ 
+
+####For distributed without hiera
 
 Directory service
 
 ```puppet
 # In this example fqdn is dir.vagrant.dev
-include xtreemfs::server::directory
+include xtreemfs::role::directory
 ```
 
 Metadata server
 
 ```puppet
-class { 'xtreemfs::server::metadata':
+class { 'xtreemfs::role::metadata':
   dir_service => 'dir.vagrant.dev',
 }
 ```
@@ -67,7 +81,7 @@ class { 'xtreemfs::server::metadata':
 Storage node(s)
 
 ```puppet
-class { 'xtreemfs::server::storage':
+class { 'xtreemfs::role::storage':
   dir_service => 'dir.vagrant.dev',
   object_dir  => '/mnt/sdb1/objs',
 }
