@@ -29,11 +29,6 @@ def shellescape(str)
   return str
 end
 
-def psql(psql_cmd, user = 'postgres', exit_codes = [0,1], &block)
-  psql = "psql #{psql_cmd}"
-  shell("su #{shellescape(user)} -c #{shellescape(psql)}", :acceptable_exit_codes => exit_codes, &block)
-end
-
 unless ENV['RS_PROVISION'] == 'no' or ENV['BEAKER_provision'] == 'no'
   # This will install the latest available package on el and deb based
   # systems fail on windows and osx, and install via gem on other *nixes
@@ -66,23 +61,13 @@ RSpec.configure do |c|
   # Configure all nodes in nodeset
   c.before :suite do
     # Install module and dependencies
-    puppet_module_install(:source => proj_root, :module_name => 'postgresql')
+    puppet_module_install(:source => proj_root, :module_name => 'xtreemfs')
 
     # Set up selinux if appropriate.
     if fact('osfamily') == 'RedHat' && fact('selinux') == 'true'
       pp = <<-EOS
         if $::osfamily == 'RedHat' and $::selinux == 'true' {
-          $semanage_package = $::operatingsystemmajrelease ? {
-            '5'     => 'policycoreutils',
-            default => 'policycoreutils-python',
-          }
 
-          package { $semanage_package: ensure => installed }
-          exec { 'set_postgres':
-            command     => 'semanage port -a -t postgresql_port_t -p tcp 5433',
-            path        => '/bin:/usr/bin/:/sbin:/usr/sbin',
-            subscribe   => Package[$semanage_package],
-          }
         }
       EOS
 
@@ -93,14 +78,13 @@ RSpec.configure do |c|
       on host, "/bin/touch #{default['puppetpath']}/hiera.yaml"
       on host, 'chmod 755 /root'
       if fact('osfamily') == 'Debian'
-        on host, "echo \"en_US ISO-8859-1\nen_NG.UTF-8 UTF-8\nen_US.UTF-8 UTF-8\n\" > /etc/locale.gen"
+        on host, "echo \"en_US ISO-8859-1\nen_US.UTF-8 UTF-8\n\" > /etc/locale.gen"
         on host, '/usr/sbin/locale-gen'
         on host, '/usr/sbin/update-locale'
       end
 
       on host, puppet('module','install','puppetlabs-stdlib'), { :acceptable_exit_codes => [0,1] }
       on host, puppet('module','install','puppetlabs-apt'), { :acceptable_exit_codes => [0,1] }
-      on host, puppet('module','install','--force','puppetlabs-concat'), { :acceptable_exit_codes => [0,1] }
     end
 
 
