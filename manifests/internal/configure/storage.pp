@@ -10,15 +10,15 @@ class xtreemfs::internal::configure::storage (
       "set dir_service.host ${dir_service}",
       "set object_dir ${object_dir}/objs",
     ],
-    before  => Anchor[$xtreemfs::internal::workflow::packages],
+    require => Anchor[$xtreemfs::internal::workflow::packages],
     notify  => Anchor[$xtreemfs::internal::workflow::configure],
   }
   
   file { $object_dir:
-    ensure => 'directory',
-    owner  => 'xtreemfs',
-    group  => 'xtreemfs',
-    before => Anchor[$xtreemfs::internal::workflow::packages],
-    notify => Anchor[$xtreemfs::internal::workflow::configure],
+    ensure  => 'directory',
+    owner   => 'xtreemfs',
+    group   => 'xtreemfs',
+    require => Anchor[$xtreemfs::internal::workflow::packages],
+    notify  => Anchor[$xtreemfs::internal::workflow::configure],
   }
 }

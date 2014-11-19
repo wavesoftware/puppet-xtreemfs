@@ -59,7 +59,7 @@ describe 'xtreemfs::role::metadata', :type => :class do
         'changes' => 'set dir_service.host dir.example.vm'
       ) }
       it 'should contains augeas[..::mrc] that comes before Anchor[..::packages]' do
-        should contain_augeas('xtreemfs::configure::mrc').that_comes_before('Anchor[xtreemfs::packages]')
+        should contain_augeas('xtreemfs::configure::mrc').that_requires('Anchor[xtreemfs::packages]')
       end
       it 'should contains augeas[..::mrc] that notifies Anchor[..::configure]' do
         should contain_augeas('xtreemfs::configure::mrc').that_notifies('Anchor[xtreemfs::configure]')

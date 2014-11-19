@@ -63,7 +63,7 @@ describe 'xtreemfs::role::storage', :type => :class do
           'ensure' => 'directory',
           'owner'  => 'xtreemfs',
           'group'  => 'xtreemfs'
-        ).that_comes_before 'Anchor[xtreemfs::packages]'
+        ).that_requires 'Anchor[xtreemfs::packages]'
       end
       it 'should contain directory /mnt/sdb1 that notifies Anchor[xtreemfs::configure]' do
         should contain_file('/mnt/sdb1').that_notifies 'Anchor[xtreemfs::configure]'
@@ -86,7 +86,7 @@ describe 'xtreemfs::role::storage', :type => :class do
         ]
       ) }
       it 'should contains augeas[..::osd] that comes before Anchor[..::packages]' do
-        should contain_augeas('xtreemfs::configure::osd').that_comes_before('Anchor[xtreemfs::packages]')
+        should contain_augeas('xtreemfs::configure::osd').that_requires('Anchor[xtreemfs::packages]')
       end
       it 'should contains augeas[..::osd] that notifies Anchor[..::configure]' do
         should contain_augeas('xtreemfs::configure::osd').that_notifies('Anchor[xtreemfs::configure]')
