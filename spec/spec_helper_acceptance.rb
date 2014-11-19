@@ -67,7 +67,11 @@ RSpec.configure do |c|
     if fact('osfamily') == 'RedHat' && fact('selinux') == 'true'
       pp = <<-EOS
         if $::osfamily == 'RedHat' and $::selinux == 'true' {
-
+          # SELInux?
+        }
+        augeas { "/etc/puppet/puppet.conf":
+          context => '/files/etc/puppet/puppet.conf',
+          changes => 'set main/show_diff true',
         }
       EOS
 

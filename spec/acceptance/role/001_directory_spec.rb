@@ -26,7 +26,14 @@ describe 'xtreemfs::role::directory class', :unless => UNSUPPORTED_PLATFORMS.inc
 
   describe 'executing simple include with puppet code' do
     
-    pp = 'include xtreemfs::role::directory'
+    pp = <<-eos
+    class { 'xtreemfs::settings': 
+      extra => {
+        'debug.level' => 2,
+      }
+    }
+    include xtreemfs::role::directory
+    eos
     
     it 'should work without errors' do
       apply_manifest(pp, :catch_failures => true)

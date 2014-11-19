@@ -4,7 +4,14 @@ describe 'xtreemfs::role::storage class', :unless => UNSUPPORTED_PLATFORMS.inclu
 
   describe 'executing simple include with puppet code' do
     
-    pp = 'include xtreemfs::role::storage'
+    pp = <<-eos
+    class { 'xtreemfs::settings': 
+      extra => {
+        'debug.level' => 4,
+      }
+    }
+    include xtreemfs::role::storage
+    eos
     
     it 'should work without errors' do
       apply_manifest(pp, :catch_failures => true)

@@ -4,13 +4,13 @@
 #
 # === Settings
 #
-# [$dir_service]      
+# [*dir_service*]      
 #     Provide an host to where metadata and storage nodes will be connecting, defaults: <tt>$::fqdn</tt>
-# [$install_packages]
+# [*install_packages*]
 #     If set to +true+ will install packages of XtreemFS, defaults: +true+
-# [$add_repo]
+# [*add_repo*]
 #     If set to +true+ will add to system repository for XtreemFS, defaults: +true+
-# [$extra]
+# [*extra*]
 #     An extra hash to provide other configuration options in form exactly like: 
 #     http://www.xtreemfs.org/xtfs-guide-1.5/index.html#tth_sEc3.2.6
 #
@@ -32,6 +32,7 @@ class xtreemfs::role::metadata (
   
   class { 'xtreemfs::internal::configure::metadata':
     dir_service => $dir_service,
+    extra       => $extra,
   }
   
   service { 'xtreemfs-mrc':
