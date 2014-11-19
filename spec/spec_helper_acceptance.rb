@@ -30,10 +30,16 @@ def shellescape(str)
 end
 
 unless ENV['RS_PROVISION'] == 'no' or ENV['BEAKER_provision'] == 'no'
+
+  hosts.each do |host|
+    if fact('osfamily') == 'Suse'
+      shell 'cp -f /etc/resolv.conf.netconfig /etc/resolv.conf'
+    end
+  end
+
   # This will install the latest available package on el and deb based
   # systems fail on windows and osx, and install via gem on other *nixes
   foss_opts = { :default_action => 'gem_install' }
-
   if default.is_pe?; then install_pe; else install_puppet( foss_opts ); end
 
   hosts.each do |host|
@@ -49,7 +55,7 @@ unless ENV['RS_PROVISION'] == 'no' or ENV['BEAKER_provision'] == 'no'
   end
 end
 
-UNSUPPORTED_PLATFORMS = ['AIX','windows','Solaris','Suse']
+UNSUPPORTED_PLATFORMS = ['AIX','windows','Solaris']
 
 RSpec.configure do |c|
   # Project root
