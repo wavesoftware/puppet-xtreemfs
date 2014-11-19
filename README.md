@@ -165,10 +165,10 @@ For unit testing, make sure you have:
 * rake
 * bundler
 
-Install the necessary gems:
+Install the necessary gems (gems will be downloaded to private `.vendor` directory):
 
 ```shell
-bundle install --path=vendor
+bundle install --path=.vendor
 ```
 
 And then run the unit tests:
@@ -179,7 +179,7 @@ bundle exec rake spec
 
 The unit tests are ran in Travis-CI as well, if you want to see the results of your own tests register the service hook through Travis-CI via the accounts section for your Github clone of this project.
 
-If you want to run the system tests, make sure you also have:
+If you want to run the system acceptance tests, make sure you also have:
 
 * vagrant > 1.2.x
 * Virtualbox > 4.2.10
@@ -187,13 +187,13 @@ If you want to run the system tests, make sure you also have:
 Then run the tests using:
 
 ```shell
-bundle exec rspec spec/acceptance
+bundle exec rake beaker
 ```
 
-To run the tests on different operating systems, see the sets available in .nodeset.yml and run the specific set with the following syntax:
+To run the tests on different operating system, see the sets available in .nodeset.yml and run the specific set with the following syntax:
 
 ```shell
-RSPEC_SET=debian-607-x64 bundle exec rspec spec/acceptance
+bundle exec rake beaker BEAKER_set=debian-607-x64
 ```
 
 ###Contributing
