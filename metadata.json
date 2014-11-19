@@ -1,7 +1,7 @@
 {
   "name": "wavesoftware-xtreemfs",
   "version": "0.1.0",
-  "author": "Krzysztof Suszyński",
+  "author": "Krzysztof Suszynski",
   "summary": "The XtreemFS module allows you to easily manage XtreemFS installation, volumes and mounts",
   "license": "Apache 2.0",
   "source": "git://github.com/wavesoftware/puppet-xtreemfs.git",
