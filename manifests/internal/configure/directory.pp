@@ -1,10 +1,10 @@
 # INTERNAL PRIVATE CLASS: do not use directly!
 class xtreemfs::internal::configure::directory (
-  $extra,
+  $properties,
 ) {
   include xtreemfs::internal::workflow
 
-  $changes = extra_to_augeas($extra, [])
+  $changes = properties_to_augeas($properties, [])
 
   $configfile = '/etc/xos/xtreemfs/dirconfig.properties'
   augeas { 'xtreemfs::configure::directory':

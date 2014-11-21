@@ -1,12 +1,12 @@
 # INTERNAL PRIVATE CLASS: do not use directly!
 class xtreemfs::internal::configure::metadata (
   $dir_service,
-  $extra,
+  $properties,
 ) {
   include xtreemfs::internal::workflow
   
   $this_changes = ["set dir_service.host ${dir_service}"]
-  $changes = extra_to_augeas($extra, $this_changes)
+  $changes = properties_to_augeas($properties, $this_changes)
 
   $configfile = '/etc/xos/xtreemfs/mrcconfig.properties'
   augeas { 'xtreemfs::configure::mrc':

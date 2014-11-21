@@ -15,7 +15,7 @@ describe 'xtreemfs::settings', :type => :class do
       'object_dir'       => '/var/lib/xtreemfs',
       'install_packages' => true,
       'add_repo'         => true,
-      'extra'            => {}
+      'properties'       => {}
     )
   end
   it { should contain_class("xtreemfs::internal::settings") }

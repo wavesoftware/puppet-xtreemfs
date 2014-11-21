@@ -1,9 +1,15 @@
 xtreemfs
 ========
 
-Work in progres!!!
+**Cauction:** Work in progres!!!
 
-**Build Status:** Master [![Build Status](https://travis-ci.org/wavesoftware/puppet-xtreemfs.png?branch=master)](https://travis-ci.org/wavesoftware/puppet-xtreemfs) Develop: [![Build Status](https://travis-ci.org/wavesoftware/puppet-xtreemfs.png?branch=develop)](https://travis-ci.org/wavesoftware/puppet-xtreemfs)
+*Travis-CI (puppet syntax check, puppet lint, rspec-puppet)*
+: `origin/master` [![Build Status](https://travis-ci.org/wavesoftware/puppet-xtreemfs.png?branch=master)](https://travis-ci.org/wavesoftware/puppet-xtreemfs) 
+: `origin/develop` [![Build Status](https://travis-ci.org/wavesoftware/puppet-xtreemfs.png?branch=develop)](https://travis-ci.org/wavesoftware/puppet-xtreemfs)
+
+*Jenkins (as Travis-CI + beaker acceptance tests: `ubuntu-1404-x64`, `centos-65-x64`)*
+: `origin/master` [need a badge]
+: `origin/develop` [need a badge]
 
 Table of Contents
 -----------------
@@ -62,8 +68,8 @@ include xtreemfs::role::storage
      - If set to `true` will install packages of XtreemFS, defaults: `true`
  - `xtreemfs::settings::add_repo`
      - If set to `true` will add to system repository for XtreemFS, defaults: `true`
- - `xtreemfs::settings::extra`
-     - An extra hash to provide other configuration options in form exactlly like: http://www.xtreemfs.org/xtfs-guide-1.5/index.html#tth_sEc3.2.6    
+ - `xtreemfs::settings::properties`
+     - A properties hash to provide configuration options in form exactly like: http://www.xtreemfs.org/xtfs-guide-1.5/index.html#tth_sEc3.2.6    
  
 
 ####For distributed without hiera

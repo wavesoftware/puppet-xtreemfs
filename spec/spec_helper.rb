@@ -6,6 +6,9 @@ RSpec.configure do |c|
   end
   c.include PuppetlabsSpec::Files
 
+  # Readable test descriptions
+  c.formatter = :documentation
+
   c.before :each do
     # Store any environment variables away to be restored later
     @old_env = {}

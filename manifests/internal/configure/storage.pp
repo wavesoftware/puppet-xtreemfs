@@ -2,7 +2,7 @@
 class xtreemfs::internal::configure::storage (
   $dir_service,
   $object_dir,
-  $extra,
+  $properties,
 ) {
   include xtreemfs::internal::workflow
 
@@ -10,7 +10,7 @@ class xtreemfs::internal::configure::storage (
     "set dir_service.host ${dir_service}",
     "set object_dir ${object_dir}/objs",
   ]
-  $changes = extra_to_augeas($extra, $this_changes)
+  $changes = properties_to_augeas($properties, $this_changes)
 
   $configfile = '/etc/xos/xtreemfs/osdconfig.properties'
   augeas { 'xtreemfs::configure::osd':

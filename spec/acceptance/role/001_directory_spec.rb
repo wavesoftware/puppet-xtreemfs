@@ -28,7 +28,7 @@ describe 'xtreemfs::role::directory class', :unless => UNSUPPORTED_PLATFORMS.inc
     
     pp = <<-eos
     class { 'xtreemfs::settings': 
-      extra => {
+      properties => {
         'debug.level' => 2,
       }
     }

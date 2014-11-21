@@ -6,7 +6,7 @@ describe 'xtreemfs::role::storage class', :unless => UNSUPPORTED_PLATFORMS.inclu
     
     pp = <<-eos
     class { 'xtreemfs::settings': 
-      extra => {
+      properties => {
         'debug.level' => 4,
       }
     }

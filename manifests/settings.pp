@@ -13,8 +13,8 @@
 #     If set to +true+ will install packages of XtreemFS, defaults: +true+
 # [*add_repo*]
 #     If set to +true+ will add to system repository for XtreemFS, defaults: +true+
-# [*extra*]
-#     An extra hash to provide other configuration options in form exactly like: 
+# [*properties*]
+#     A properties hash to provide configuration options in form exactly like: 
 #     http://www.xtreemfs.org/xtfs-guide-1.5/index.html#tth_sEc3.2.6
 #
 class xtreemfs::settings (
@@ -22,7 +22,7 @@ class xtreemfs::settings (
   $object_dir       = '/var/lib/xtreemfs',
   $install_packages = true,
   $add_repo         = true,
-  $extra            = {},
+  $properties       = {},
 ) {
   include xtreemfs::internal::settings
   

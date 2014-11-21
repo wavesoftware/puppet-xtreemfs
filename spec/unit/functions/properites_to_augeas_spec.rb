@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'extra_to_augeas', :type => :puppet_function do
+describe 'properties_to_augeas', :type => :puppet_function do
   it 'should return correct 4 element array after joining 2 element hash with 2 incoming augeas changes' do
     should run.
       with_params({ 
@@ -21,21 +21,28 @@ describe 'extra_to_augeas', :type => :puppet_function do
     should run.
       with_params().and_raise_error(
         Puppet::ParseError, 
-        'extra_to_augeas(): Wrong number of arguments given (0 for 2)'
+        'properies_to_augeas(): Wrong number of arguments given (0 for 1..2)'
       )
   end
   it 'should throw Puppet::ParseError if passing 1 arg' do
     should run.
-      with_params({}).and_raise_error(
-        Puppet::ParseError, 
-        'extra_to_augeas(): Wrong number of arguments given (1 for 2)'
-      )
+      with_params({}).and_return([])
   end
   it 'should throw Puppet::ParseError if passing 3 and more args' do
     should run.
       with_params(1, 2, 3).and_raise_error(
         Puppet::ParseError, 
-        'extra_to_augeas(): Wrong number of arguments given (3 for 2)'
+        'properies_to_augeas(): Wrong number of arguments given (3 for 1..2)'
       )
   end
+  
+  it 'should throw Puppet::ParseError if passing wrong type of arguments' do
+    should run.
+      with_params(true, []).
+        and_raise_error(
+          Puppet::ParseError,
+          "properies_to_augeas(): Wrong type of arguments given (TrueClass for Hash, Array for Array)"
+        )
+  end
+
 end

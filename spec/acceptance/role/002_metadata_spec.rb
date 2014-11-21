@@ -6,7 +6,7 @@ describe 'xtreemfs::role::metadata class', :unless => UNSUPPORTED_PLATFORMS.incl
     
     pp = <<-eos
     class { 'xtreemfs::settings': 
-      extra => {
+      properties => {
         'debug.level' => 1,
       }
     }
