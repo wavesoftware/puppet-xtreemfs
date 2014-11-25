@@ -2,6 +2,7 @@
 class xtreemfs::internal::packages::client {
   
   include xtreemfs::internal::workflow
+  
   $packages = ['xtreemfs-client', 'xtreemfs-tools']
   ensure_packages($packages)
   

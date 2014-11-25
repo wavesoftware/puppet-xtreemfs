@@ -6,3 +6,6 @@ spec/fixtures/
 .bundle/
 coverage/
 doc/
+.tmp/
+Puppetfile.lock
+.librarian/
