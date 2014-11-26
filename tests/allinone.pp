@@ -12,3 +12,9 @@ xtreemfs::volume { 'myVolume':
   ensure      => 'present',
   dir_service => $::fqdn,
 }
+
+xtreemfs::mount { '/mnt/xtreemfs-myvolume':
+  ensure      => 'mounted',
+  dir_service => $::fqdn,
+  volume      => 'myVolume',
+}

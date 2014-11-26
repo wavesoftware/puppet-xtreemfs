@@ -3,9 +3,10 @@ require 'spec_helper'
 describe 'xtreemfs::volume', :type => :define do
   let :facts do
     {
-      :osfamily => 'Debian',
-      :operatingsystem => 'Debian',
+      :osfamily               => 'Debian',
+      :operatingsystem        => 'Debian',
       :operatingsystemrelease => '6.0',
+      :fqdn                   => 'slave4.vm',
     }
   end
 
@@ -14,7 +15,20 @@ describe 'xtreemfs::volume', :type => :define do
   end
 
   describe 'should work with only default parameters' do
-    it { should contain_xtreemfs__volume('myVolume') }
+    it do
+      should contain_xtreemfs__volume('myVolume').with(
+        'ensure'      => 'present',
+        'dir_service' => nil,
+        'options'     => {}
+      )
+    end
+    it do
+      should contain_xtreemfs_volume('myVolume').with(
+        'ensure'      => 'present',
+        'host'        => 'slave4.vm',
+        'options'     => {}
+      )
+    end
   end
 
   describe 'should work with all parameters' do

@@ -1,4 +1,4 @@
-package { 'librarian-puppet': 
+package { 'librarian-puppet':
   ensure   => 'installed',
   provider => 'gem',
   require  => Package['ruby-dev'],
@@ -7,10 +7,12 @@ package { ['git', 'ruby-dev']:
   ensure => 'installed',
 }
 
-exec { 'librarian-puppet config path /etc/puppet/modules --global && librarian-puppet update --verbose && touch .tmp/modules-installed':
+$lock = 'tests/vagrant/.vagrant/machines/master/virtualbox/modules-installed'
+
+exec { "librarian-puppet config path /etc/puppet/modules --global && librarian-puppet update --verbose && touch ${lock}":
   path      => $::path,
-	cwd       => '/etc/puppet/modules/xtreemfs',
-  onlyif    => 'bash -c \'[[ ! -f .tmp/modules-installed ]] || [[ metadata.json -nt .tmp/modules-installed ]]\'',
+  cwd       => '/etc/puppet/modules/xtreemfs',
+  onlyif    => "bash -c '[[ ! -f ${lock} ]] || [[ metadata.json -nt ${lock} ]]'",
   logoutput => true,
   require   => [
     Package['librarian-puppet'],

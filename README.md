@@ -124,8 +124,9 @@ To manage mount point:
 
 ```puppet
 xtreemfs::mount { '/mnt/xtreemfs':
-  ensure => 'present',
-  volume => 'dir.vagrant.dev/myVolume',
+  ensure      => 'mounted',
+  volume      => 'myVolume',
+  dir_service => 'dir.vagrant.dev',
 }
 ```
 
