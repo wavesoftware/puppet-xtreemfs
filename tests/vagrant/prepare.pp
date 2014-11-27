@@ -7,9 +7,10 @@ package { ['git', 'ruby-dev']:
   ensure => 'installed',
 }
 
-$lock = 'tests/vagrant/.vagrant/machines/master/virtualbox/modules-installed'
+$lock = "tests/vagrant/.vagrant/machines/${::hostname}/virtualbox/modules-installed"
 
-exec { "librarian-puppet config path /etc/puppet/modules --global && librarian-puppet update --verbose && touch ${lock}":
+exec { 'librarian-puppet':
+  command   => "librarian-puppet config path /etc/puppet/modules --global && librarian-puppet update --verbose && touch ${lock}",
   path      => $::path,
   cwd       => '/etc/puppet/modules/xtreemfs',
   onlyif    => "bash -c '[[ ! -f ${lock} ]] || [[ metadata.json -nt ${lock} ]]'",

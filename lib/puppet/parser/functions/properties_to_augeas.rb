@@ -19,6 +19,6 @@ module Puppet::Parser::Functions
 
     extra_list = extra_hash.map { |k, v| "set #{k} #{v}" }
     retval = extra_list.concat augeas_changes
-    retval
+    retval.sort
   end
 end

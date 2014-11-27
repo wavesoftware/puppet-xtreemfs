@@ -54,7 +54,7 @@ describe 'xtreemfs::role::storage', :type => :class do
           'context' => '/files/etc/xos/xtreemfs/osdconfig.properties',
           'changes' => [ 
             'set dir_service.host storage.localdomain',
-            'set object_dir /mnt/sdb1/objs' 
+            'set object_dir /mnt/sdb1/objs/' 
           ]
         )
       end
@@ -82,7 +82,7 @@ describe 'xtreemfs::role::storage', :type => :class do
         'context' => '/files/etc/xos/xtreemfs/osdconfig.properties',
         'changes' => [ 
           'set dir_service.host dir.example.vm',
-          'set object_dir /var/lib/xtreemfs/objs' 
+          'set object_dir /var/lib/xtreemfs/objs/' 
         ]
       ) }
       it 'should contains augeas[..::osd] that comes before Anchor[..::packages]' do

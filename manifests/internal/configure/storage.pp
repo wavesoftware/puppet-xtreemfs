@@ -8,7 +8,7 @@ class xtreemfs::internal::configure::storage (
 
   $this_changes = [
     "set dir_service.host ${dir_service}",
-    "set object_dir ${object_dir}/objs",
+    "set object_dir ${object_dir}/objs/",
   ]
   $changes = properties_to_augeas($properties, $this_changes)
 
