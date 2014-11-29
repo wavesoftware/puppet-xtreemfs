@@ -13,6 +13,16 @@ describe 'xtreemfs::role::directory', :type => :class do
       }
     end
     it { should compile.with_all_deps }
+    it { should contain_anchor('xtreemfs::configure') }
+    it { should contain_anchor('xtreemfs::end') }
+    it { should contain_anchor('xtreemfs::packages') }
+    it { should contain_anchor('xtreemfs::service') }
+    it { should contain_augeas('xtreemfs::configure::directory') }
+    it { should contain_class('xtreemfs::role::directory') }
+    it { should contain_class('xtreemfs::internal::workflow') }
+    it { should contain_class('xtreemfs::internal::repo') }
+    it { should contain_class('xtreemfs::internal::packages::server') }
+    it { should contain_class('xtreemfs::internal::configure::directory') }
     it { should contain_package('xtreemfs-server') }
     it { should contain_anchor('xtreemfs::repo') }
     it { should contain_exec('apt_update').that_comes_before('Anchor[xtreemfs::repo]') }
@@ -44,6 +54,26 @@ describe 'xtreemfs::role::directory', :type => :class do
         { :add_repo => false }
       end
       it { should compile }
+    end
+
+    context 'double checking for apt module resources' do
+      it { should contain_class('apt') }
+      it { should contain_class('apt::update') }
+      it { should contain_class('apt::params') }
+      it { should contain_anchor('apt_key 07D6EA4F2FA7E736 present') }
+      it { should contain_anchor('apt::source::xtreemfs') }
+      it { should contain_anchor('apt::update') }
+      
+      # Dodgy deps :-/
+      it { should contain_file('xtreemfs.list') }
+      it { should contain_file('sources.list.d') }
+      it { should contain_file('sources.list') }
+      it { should contain_file('preferences.d') }
+
+      # Even dodgier deps :-(
+      it { should contain_file('01proxy') }
+      it { should contain_file('/etc/apt/apt.conf.d/15update-stamp') }
+      it { should contain_file('old-proxy-file') }
     end
   end
   context 'in CentOS 7' do

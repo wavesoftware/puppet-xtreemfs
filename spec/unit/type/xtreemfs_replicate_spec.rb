@@ -41,6 +41,9 @@ describe Puppet::Type.type(:xtreemfs_replicate) do
       it "should support none as a value for policy" do
         expect { described_class.new(:policy => 'none', :file => '/mnt/file2') }.to_not raise_error
       end
+      it "should support readonly as a value for policy" do
+        expect { described_class.new(:policy => 'readonly', :file => '/mnt/file3') }.to_not raise_error
+      end
       it "should not support other values" do
         expect { described_class.new(:policy => 'none s', :file => '/mnt/file2') }.to raise_error(Puppet::Error, /Invalid value/)
       end

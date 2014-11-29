@@ -1,5 +1,28 @@
 require 'puppetlabs_spec_helper/module_spec_helper'
 
+begin
+  gem 'simplecov'
+  require 'simplecov'
+  SimpleCov.start do
+    add_filter "/spec/"
+    add_filter "/.vendor/"
+    add_filter "/vendor/"
+    add_filter "/gems/"
+  end
+rescue Gem::LoadError
+  # do nothing
+end
+
+begin
+  gem 'coveralls'
+  require 'coveralls'  
+  if ENV['TRAVIS']
+    Coveralls.wear!
+  end
+rescue Gem::LoadError
+  # do nothing
+end
+
 RSpec.configure do |c|
   c.mock_with :rspec do |mock|
     mock.syntax = [:expect, :should]
@@ -30,5 +53,3 @@ def param(type, title, param)
   param_value(catalogue, type, title, param)
 end
 
-# With rspec-puppet v2.0 this allows coverage checks.
-#at_exit { RSpec::Puppet::Coverage.report! }

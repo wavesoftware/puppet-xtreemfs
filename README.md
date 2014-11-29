@@ -3,13 +3,7 @@ xtreemfs
 
 **Cauction:** Work in progres!!!
 
-*Travis-CI (puppet syntax check, puppet lint, rspec-puppet)*
-: `origin/master` [![Build Status](https://travis-ci.org/wavesoftware/puppet-xtreemfs.png?branch=master)](https://travis-ci.org/wavesoftware/puppet-xtreemfs) 
-: `origin/develop` [![Build Status](https://travis-ci.org/wavesoftware/puppet-xtreemfs.png?branch=develop)](https://travis-ci.org/wavesoftware/puppet-xtreemfs)
-
-*Jenkins (as Travis-CI + beaker acceptance tests: `ubuntu-1404-x64`, `centos-65-x64`)*
-: `origin/master` [need a badge]
-: `origin/develop` [need a badge]
+[![Build Status](https://travis-ci.org/wavesoftware/puppet-xtreemfs.png?branch=develop)](https://travis-ci.org/wavesoftware/puppet-xtreemfs) [![Dependency Status](https://gemnasium.com/wavesoftware/puppet-xtreemfs.svg)](https://gemnasium.com/wavesoftware/puppet-xtreemfs) [![Coverage Status](https://img.shields.io/coveralls/wavesoftware/puppet-xtreemfs.svg)](https://coveralls.io/r/wavesoftware/puppet-xtreemfs) [![Code Climate](https://codeclimate.com/github/wavesoftware/puppet-xtreemfs/badges/gpa.svg)](https://codeclimate.com/github/wavesoftware/puppet-xtreemfs) [![Inline docs](http://inch-ci.org/github/wavesoftware/puppet-xtreemfs.svg?branch=develop)](http://inch-ci.org/github/wavesoftware/puppet-xtreemfs)
 
 Table of Contents
 -----------------
@@ -143,15 +137,6 @@ xtreemfs::replicate { '/mnt/xtreemfs/centos7.iso':
 }
 ```
 
-Recurse:
-
-```puppet
-xtreemfs::replicate { '/mnt/xtreemfs/shared-dir':
-  policy  => 'WqRq',
-  recurse => true,
-}
-```
-
 ###Automatic replication
 
 To automaticy replicate ne files in XtreemFS mount point (existing files are not affected):
@@ -175,7 +160,7 @@ For unit testing, make sure you have:
 Install the necessary gems (gems will be downloaded to private `.vendor` directory):
 
 ```shell
-bundle install --path=.vendor
+bundle install --path .vendor
 ```
 
 And then run the unit tests:
@@ -194,13 +179,13 @@ If you want to run the system acceptance tests, make sure you also have:
 Then run the tests using:
 
 ```shell
-bundle exec rake beaker
+bundle exec rake acceptance
 ```
 
-To run the tests on different operating system, see the sets available in .nodeset.yml and run the specific set with the following syntax:
+To run the tests on different operating system, see the sets available in `spec/acceptance/nodesets/` and run the specific set with the following syntax:
 
 ```shell
-bundle exec rake beaker BEAKER_set=debian-607-x64
+bundle exec rake acceptance RS_SET=debian-76-x64
 ```
 
 ###Contributing

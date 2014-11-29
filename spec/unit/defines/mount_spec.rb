@@ -17,7 +17,7 @@ describe 'xtreemfs::mount', :type => :define do
   describe 'shouldn\'t work with only default parameters, must pass a volume' do
     it do
       expect { should compile }.
-        to raise_error(Puppet::Error, /Must pass volume to Xtreemfs::Mount/)
+        to raise_error(/Must pass volume to Xtreemfs::Mount/)
     end
   end
 
@@ -27,6 +27,8 @@ describe 'xtreemfs::mount', :type => :define do
         :volume      => 'myVolume'
       }
     end
+    it { should compile }
+    it { should contain_class('xtreemfs::internal::packages::client') }
     it do
       should contain_xtreemfs__mount('/mnt/my-xtreemfs-mount').with(
         'ensure'      => 'mounted',

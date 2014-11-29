@@ -13,6 +13,7 @@ describe 'xtreemfs::role::metadata', :type => :class do
       }
     end
     it { should compile.with_all_deps }
+    it { should contain_class('xtreemfs::role::metadata') }
     it { should contain_package('xtreemfs-server') }
     it { should contain_anchor('xtreemfs::repo') }
     it { should contain_exec('apt_update').that_comes_before('Anchor[xtreemfs::repo]') }

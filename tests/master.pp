@@ -1,6 +1,6 @@
 class { 'xtreemfs::settings':
   properties => {
-    'debug.level' => 6,
+    'debug.level' => 7,
   },
 }
 
@@ -17,4 +17,5 @@ xtreemfs::mount { '/mnt/xtreemfs-myvolume':
   ensure      => 'mounted',
   dir_service => $::fqdn,
   volume      => 'myVolume',
+  atboot      => false,
 }

@@ -9,4 +9,5 @@ xtreemfs::mount { '/mnt/xtreemfs-myvolume':
   ensure      => 'mounted',
   dir_service => $dir,
   volume      => 'myVolume',
+  atboot      => false,
 }

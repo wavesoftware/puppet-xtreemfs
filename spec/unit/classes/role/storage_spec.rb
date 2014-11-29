@@ -13,9 +13,13 @@ describe 'xtreemfs::role::storage', :type => :class do
       }
     end
     it { should compile.with_all_deps }
+    it { should contain_class('xtreemfs::role::storage') }
     it { should contain_package('xtreemfs-server') }
     it { should contain_anchor('xtreemfs::repo') }
     it { should contain_exec('apt_update').that_comes_before('Anchor[xtreemfs::repo]') }
+    it { should contain_apt_key('Add key: 07D6EA4F2FA7E736 from Apt::Source xtreemfs') }
+    it { should contain_apt__key('Add key: 07D6EA4F2FA7E736 from Apt::Source xtreemfs') }
+    it { should contain_file('/var/lib/xtreemfs') }
     it do
       should contain_apt__source('xtreemfs').with(
         'ensure'     => 'present',
@@ -44,6 +48,8 @@ describe 'xtreemfs::role::storage', :type => :class do
         { :add_repo => false }
       end
       it { should compile }
+      it { should_not contain_apt_key('Add key: 07D6EA4F2FA7E736 from Apt::Source xtreemfs') }
+      it { should_not contain_apt__key('Add key: 07D6EA4F2FA7E736 from Apt::Source xtreemfs') }
     end
     context 'with params specified: object_dir => "/mnt/sdb1"' do
       let :params do
@@ -114,6 +120,7 @@ describe 'xtreemfs::role::storage', :type => :class do
     it { should_not contain_exec('apt_update') }
     it { should_not contain_apt__source('xtreemfs') }
     it { should contain_anchor('xtreemfs::repo') }
+    it { should contain_file('/var/lib/xtreemfs') }
     it do
       should contain_yumrepo('xtreemfs').with(
         'baseurl'  => 'http://download.opensuse.org/repositories/home:/xtreemfs/CentOS_6',

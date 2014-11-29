@@ -39,6 +39,9 @@ Puppet::Type.type(:xtreemfs_replicate).provide :xtfsutil do
   end
 
   def self.load_provider file
+    unless File.file? file
+      return nil
+    end
     props = prefetch_one file
     provider = new(
       :file   => file,
@@ -59,12 +62,24 @@ Puppet::Type.type(:xtreemfs_replicate).provide :xtfsutil do
 
   def self.prefetch resources
     resources.keys.each do |name|
-      provider = load_provider name
-      resources[name].provider = provider
+      if (provider = load_provider name)
+        resources[name].provider = provider
+      end
+    end
+  end
+
+  def validate
+    unless File.exists? resource[:file]
+      fail "A file for replicate must exists, but it doesn't - #{resource[:file]}"
+    end
+    unless File.file? resource[:file]
+      type = File.stat(resource[:file]).ftype
+      fail "A file for replicate must be regular file, but #{type} given - #{resource[:file]}"
     end
   end
 
   def flush
+    validate
     flush_policy
     flush_factor
   end
@@ -83,7 +98,7 @@ Puppet::Type.type(:xtreemfs_replicate).provide :xtfsutil do
       if factor > 1
         unreplicate
       end
-      xtfsutil ['--set-replication-policy', @property_flush[:policy], @resource[:file]]
+      xtfsutil ['--set-replication-policy', @property_flush[:policy], resource[:file]]
       @property_hash[:policy] = @property_flush[:policy]
     end
   end
@@ -91,16 +106,16 @@ Puppet::Type.type(:xtreemfs_replicate).provide :xtfsutil do
   def unreplicate
     shuffled = @rawprops['Replicas'].shuffle[1..-1]
     shuffled.each do |repl|
-      xtfsutil ['--delete-replica', repl[:osd_uuid], @resource[:file]]
+      xtfsutil ['--delete-replica', repl[:osd_uuid], resource[:file]]
       @property_hash[:factor] -= 1
     end
     @rawprops['Replicas'].reject { |el| shuffled.include? el }
-    @property_flush[:factor] = @resource[:factor]
+    @property_flush[:factor] = resource[:factor]
   end
 
   def replicate
     count = (@property_flush[:factor] - factor())
-    osds = available_osds @resource[:file]
+    osds = available_osds resource[:file]
     if count > osds.size
       possible = osds.size + @property_hash[:factor]
       Puppet.warning "There is not enough available OSD servers to adjust replication" +
@@ -109,14 +124,14 @@ Puppet::Type.type(:xtreemfs_replicate).provide :xtfsutil do
       count = osds.size
     end
     count.times do 
-      xtfsutil ['--add-replica', 'auto', @resource[:file]]
+      xtfsutil ['--add-replica', 'auto', resource[:file]]
       @property_hash[:factor] += 1
     end
   end
 
   def available_osds file
     re = /\s+([a-fA-F0-9-]+)\s+\((.+)\)/
-    osds = xtfsutil(['--list-osds', @resource[:file]]).split("\n")[1..-1]
+    osds = xtfsutil(['--list-osds', resource[:file]]).split("\n")[1..-1]
     osds.collect do |line|
       all, uuid, address = re.match(line).to_a
       {
@@ -145,10 +160,12 @@ Puppet::Type.type(:xtreemfs_replicate).provide :xtfsutil do
   end
 
   def policy= value
+    validate
     @property_flush[:policy] = value
   end
 
   def factor= value
+    validate
     @property_flush[:factor] = value
   end
 end

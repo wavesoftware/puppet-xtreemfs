@@ -26,10 +26,12 @@ Puppet::Type.newtype(:xtreemfs_volume) do
 
   newparam(:host) do
     desc 'A host of volume, pass an directory service host here'
+    defaultto Facter.value(:fqdn)
   end
 
   newparam(:options) do
     desc "Params for the mkfs command. eg. -l internal,agcount=x"
+    defaultto {}
   end
 
 end
