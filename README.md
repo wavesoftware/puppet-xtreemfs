@@ -3,8 +3,7 @@ xtreemfs
 
 **Cauction:** Work in progres!!!
 
-[![Build Status](https://travis-ci.org/wavesoftware/puppet-xtreemfs.png?branch=develop)](https://travis-ci.org/wavesoftware/puppet-xtreemfs) [![Dependency Status](https://gemnasium.com/wavesoftware/puppet-xtreemfs.svg)](https://gemnasium.com/wavesoftware/puppet-xtreemfs) [![Coverage Status](https://img.shields.io/coveralls/wavesoftware/puppet-xtreemfs.svg)](https://coveralls.io/r/wavesoftware/puppet-xtreemfs?branch=develop)
-[![Code Climate](https://codeclimate.com/github/wavesoftware/puppet-xtreemfs/badges/gpa.svg?branch=develop)](https://codeclimate.com/github/wavesoftware/puppet-xtreemfs) [![Inline docs](http://inch-ci.org/github/wavesoftware/puppet-xtreemfs.svg?branch=develop)](http://inch-ci.org/github/wavesoftware/puppet-xtreemfs)
+[![Build Status](https://travis-ci.org/wavesoftware/puppet-xtreemfs.png?branch=develop)](https://travis-ci.org/wavesoftware/puppet-xtreemfs) [![Dependency Status](https://gemnasium.com/wavesoftware/puppet-xtreemfs.svg)](https://gemnasium.com/wavesoftware/puppet-xtreemfs) [![Coverage Status](https://coveralls.io/repos/wavesoftware/puppet-xtreemfs/badge.png?branch=develop)](https://coveralls.io/r/wavesoftware/puppet-xtreemfs?branch=develop) [![Code Climate](https://codeclimate.com/github/wavesoftware/puppet-xtreemfs/badges/gpa.svg?branch=develop)](https://codeclimate.com/github/wavesoftware/puppet-xtreemfs) [![Inline docs](http://inch-ci.org/github/wavesoftware/puppet-xtreemfs.svg?branch=develop)](http://inch-ci.org/github/wavesoftware/puppet-xtreemfs)
 
 Table of Contents
 -----------------
