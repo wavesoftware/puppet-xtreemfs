@@ -1,11 +1,11 @@
 require File.join(File.dirname(__FILE__), '../../puppet_x/wavesoftware/xtreemfs/type/replicable')
 
-# A type definition for xtreemfs_replicate
-Puppet::Type.newtype :xtreemfs_replicate do
+# A type definition for xtreemfs_policy
+Puppet::Type.newtype :xtreemfs_policy do
 
-  desc "The xtreemfs_replicate type"
+  desc "The xtreemfs_policy type"
 
-  newparam :file do
+  newparam :directory do
     isnamevar
   end
 

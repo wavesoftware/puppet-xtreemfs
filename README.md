@@ -139,7 +139,7 @@ xtreemfs::replicate { '/mnt/xtreemfs/centos7.iso':
 
 ###Automatic replication
 
-To automaticy replicate ne files in XtreemFS mount point (existing files are not affected):
+To automatically replicate new files in XtreemFS mount point you can set a policy for directory. This will not affect existing files. Take a look at example usage:
 
 ```puppet
 xtreemfs::policy { '/mnt/xtreemfs':

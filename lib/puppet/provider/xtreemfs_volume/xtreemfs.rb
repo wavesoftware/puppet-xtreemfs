@@ -48,7 +48,7 @@ Puppet::Type.type(:xtreemfs_volume).provide :xtreemfs do
     require 'socket'
     require 'timeout'
     begin
-      Timeout::timeout(0.2) do
+      Timeout::timeout(0.5) do
         begin
           s = TCPSocket.new host, port
           s.close

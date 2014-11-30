@@ -1,12 +1,12 @@
-# == Manages the replication of a file or directory
+# == Manages the replication of a file
 #
-# Manages a replication policy and replication factor of a file or directory.
+# Manages a replication policy and replication factor of a file.
 # It is applicable only to resources on XtreemFS filesystem mountpoint.
 #
 # === Parameters
 #
 # [*file*]
-#     (namevar) A directory or file to manage
+#     (namevar) A file to manage
 # [*policy*]
 #     The replication policy defines how a file is replicated. The policy
 #     can be changed for a file that has replicas, but puppet will remove

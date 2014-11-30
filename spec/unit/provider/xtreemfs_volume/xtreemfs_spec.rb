@@ -251,11 +251,11 @@ describe Puppet::Type.type(:xtreemfs_volume).provider(:xtreemfs) do
     before :each do
       expect(provider.class).to receive(:is_port_open?).and_call_original
     end
-    context 'when checking for 53 on google DNS' do
-      it { expect(provider.class.is_port_open? '8.8.8.8', 53).to be_truthy }
+    context 'when checking for 80 on google.com' do
+      it { expect(provider.class.is_port_open? 'google.com', 80).to be_truthy }
     end
-    context 'when checking for 32636 on google DNS' do
-      it { expect(provider.class.is_port_open? '8.8.8.8', 32636).to be_falsey }
+    context 'when checking for 32636 on google.com' do
+      it { expect(provider.class.is_port_open? 'google.com', 32636).to be_falsey }
     end
     context 'when checking for 41416 on wavesoftware.pl' do
       it { expect(provider.class.is_port_open? 'wavesoftware.pl', 41416).to be_falsey }
