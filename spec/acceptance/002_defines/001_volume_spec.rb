@@ -2,22 +2,11 @@ require 'spec_helper_acceptance'
 
 describe 'xtreemfs::volume define', :unless => UNSUPPORTED_PLATFORMS.include?(fact('osfamily')) do
 
-  let :facts do
-    {
-      :fqdn     => 'master.vagrant.dev',
-      :hostname => 'master',
-    }
-  end
-
   describe 'creating with default params' do
     
     pp = <<-eos
-    host { 'master.vagrant.dev': 
-      ensure => 'present', 
-      ip     => '127.0.0.1', 
-    } ->
     class { 'xtreemfs::settings':
-      dir_service => 'master.vagrant.dev',
+      dir_service => 'localhost',
     }
     include xtreemfs::role::directory
     include xtreemfs::role::metadata
@@ -37,12 +26,8 @@ describe 'xtreemfs::volume define', :unless => UNSUPPORTED_PLATFORMS.include?(fa
 
   describe 'purging with defaults' do
     pp = <<-eos
-    host { 'master.vagrant.dev': 
-      ensure => 'present', 
-      ip     => '127.0.0.1', 
-    } ->
     class { 'xtreemfs::settings':
-      dir_service => 'master.vagrant.dev',
+      dir_service => 'localhost',
     }
     include xtreemfs::role::directory
     include xtreemfs::role::metadata

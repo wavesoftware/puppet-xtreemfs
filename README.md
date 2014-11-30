@@ -3,7 +3,7 @@ xtreemfs
 
 **Cauction:** Work in progres!!!
 
-[![Build Status](https://travis-ci.org/wavesoftware/puppet-xtreemfs.png?branch=develop)](https://travis-ci.org/wavesoftware/puppet-xtreemfs) [![Dependency Status](https://gemnasium.com/wavesoftware/puppet-xtreemfs.svg)](https://gemnasium.com/wavesoftware/puppet-xtreemfs) [![Coverage Status](https://coveralls.io/repos/wavesoftware/puppet-xtreemfs/badge.png?branch=develop)](https://coveralls.io/r/wavesoftware/puppet-xtreemfs?branch=develop) [![Code Climate](https://codeclimate.com/github/wavesoftware/puppet-xtreemfs/badges/gpa.svg?branch=develop)](https://codeclimate.com/github/wavesoftware/puppet-xtreemfs) [![Inline docs](http://inch-ci.org/github/wavesoftware/puppet-xtreemfs.svg?branch=develop)](http://inch-ci.org/github/wavesoftware/puppet-xtreemfs)
+[![Build Status](https://img.shields.io/travis/wavesoftware/puppet-xtreemfs/develop.svg)](https://travis-ci.org/wavesoftware/puppet-xtreemfs) [![Dependency Status](https://gemnasium.com/wavesoftware/puppet-xtreemfs.svg)](https://gemnasium.com/wavesoftware/puppet-xtreemfs) [![Coverage Status](https://img.shields.io/coveralls/wavesoftware/puppet-xtreemfs/develop.svg)](https://coveralls.io/r/wavesoftware/puppet-xtreemfs?branch=develop) [![Code Climate](https://codeclimate.com/github/wavesoftware/puppet-xtreemfs/badges/gpa.svg?branch=develop)](https://codeclimate.com/github/wavesoftware/puppet-xtreemfs) [![GitHub Issues](https://img.shields.io/github/issues/wavesoftware/puppet-xtreemfs.svg)](https://github.com/wavesoftware/puppet-xtreemfs/issues)  [![Puppet Forge](https://img.shields.io/puppetforge/v/wavesoftware/xtreemfs.svg)](https://forge.puppetlabs.com/wavesoftware/xtreemfs) [![GitHub Release](https://img.shields.io/github/release/wavesoftware/puppet-xtreemfs.svg)](https://github.com/wavesoftware/puppet-xtreemfs/releases) [![Apache 2.0 License](http://img.shields.io/badge/license-Apache%202.0-red.svg)](https://raw.githubusercontent.com/wavesoftware/puppet-xtreemfs/develop/LICENSE)
 
 Table of Contents
 -----------------
@@ -186,6 +186,16 @@ To run the tests on different operating system, see the sets available in `spec/
 
 ```shell
 bundle exec rake acceptance RS_SET=debian-76-x64
+```
+
+You can also run system acceptance tests against Docker containers. If you want to do this, make sure you also have:
+
+* docker > 1.0.0
+
+To run the the test on docker container use:
+
+```shell
+bundle exec rake acceptance RS_SET=centos-65-x64-docker
 ```
 
 ###Contributing
