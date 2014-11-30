@@ -34,7 +34,7 @@ define xtreemfs::policy (
     require => Anchor[$xtreemfs::internal::workflow::packages],
   }
 
-  if defined(File[$file]) {
-    File[$file] -> Xtreemfs_policy[$file]
+  if defined(File[$directory]) {
+    File[$directory] -> Xtreemfs_policy[$directory]
   }
 }
