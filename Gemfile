@@ -11,8 +11,6 @@ group :test do
   if RUBY_VERSION >= "1.9.0"
     gem 'coveralls',            :require => false
     gem 'simplecov',            :require => false
-  else
-    gem 'rcov',                 :require => false
   end
   if facterversion = ENV['FACTER_GEM_VERSION']
     gem 'facter', facterversion, :require => false
@@ -27,6 +25,7 @@ group :test do
 end
 
 group :development do
+  gem "inch",                   :require => false
   gem "travis",                 :require => false
   gem "travis-lint",            :require => false
   gem "vagrant-wrapper",        :require => false

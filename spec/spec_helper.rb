@@ -1,4 +1,5 @@
 require 'puppetlabs_spec_helper/module_spec_helper'
+require 'rspec/its'
 
 begin
   gem 'simplecov'
@@ -19,6 +20,13 @@ begin
   if ENV['TRAVIS']
     Coveralls.wear!
   end
+rescue Gem::LoadError
+  # do nothing
+end
+
+begin
+  gem 'pry'
+  require 'pry'
 rescue Gem::LoadError
   # do nothing
 end
