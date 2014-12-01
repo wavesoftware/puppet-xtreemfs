@@ -248,14 +248,24 @@ describe Puppet::Type.type(:xtreemfs_volume).provider(:xtreemfs) do
   end
 
   describe 'checking is ports are open' do
+
+    let(:params) do
+      {}
+    end
+
     before :each do
       expect(provider.class).to receive(:is_port_open?).and_call_original
+      require 'socket'
+      params[:serv] = TCPServer.new('localhost', 49746)
     end
-    context 'when checking for 80 on google.com' do
-      it { expect(provider.class.is_port_open? 'google.com', 80).to be_truthy }
+    after :each do
+      params[:serv].shutdown
     end
-    context 'when checking for 32636 on google.com' do
-      it { expect(provider.class.is_port_open? 'google.com', 32636).to be_falsey }
+    context 'when checking for 49746 on localhost' do
+      it { expect(provider.class.is_port_open? 'localhost', 49746).to be_truthy }
+    end
+    context 'when checking for 49747 on localhost' do
+      it { expect(provider.class.is_port_open? 'localhost', 49747).to be_falsey }
     end
     context 'when checking for 41416 on wavesoftware.pl' do
       it { expect(provider.class.is_port_open? 'wavesoftware.pl', 41416).to be_falsey }
