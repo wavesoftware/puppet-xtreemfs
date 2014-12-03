@@ -1,8 +1,16 @@
+# A puppet x module
 module Puppet_X
+# A Wavesoftware puppet_x module
 module Wavesoftware
+# XtreemFS module
 module Xtreemfs
+# A XtreemFS provider module that holds all custom providers for XtreemFS types 
 module Provider
 
+  # Common provider for policy and replicate types.
+  # This provider uses xtfsutil command to manage theirs resources.
+  #
+  # It is not browsable, as it ware files, on same reasons
   class Xtfsutil < Puppet::Provider
 
     # Puppet instances method, that fetches instances for CLI

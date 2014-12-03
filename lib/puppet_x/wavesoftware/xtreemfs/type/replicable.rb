@@ -1,6 +1,10 @@
+# A puppet x module
 module Puppet_X
+# A Wavesoftware puppet_x module
 module Wavesoftware
+# XtreemFS module
 module Xtreemfs
+# A XtreemFS type module that holds all custom types for XtreemFS
 module Type
 
   # Common abstract type for replicable resources that is policy and replicate
