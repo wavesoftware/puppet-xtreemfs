@@ -185,13 +185,17 @@ Puppet::Type.type(:xtreemfs_volume).provide :xtreemfs do
   def options type
     opts = []
     if resource[:options]
-      resource[:options].each do |key, value|
+      resource[:options].keys.sort.each do |key|
+        value = resource[:options][key]
+        value = nil if value == :undef
+        value = value.to_s
         if predicate(type).call(key)
-          opts << "#{key} #{value}".strip
+          opts << key.strip
+          opts << value.strip unless value.strip.empty?
         end
       end
     end
-    return opts.sort
+    return opts
   end
 
   # A predicate for type, that returns +true+ if command line opts is applicable to given command type

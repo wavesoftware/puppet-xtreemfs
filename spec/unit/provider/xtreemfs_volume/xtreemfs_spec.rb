@@ -132,7 +132,7 @@ describe Puppet::Type.type(:xtreemfs_volume).provider(:xtreemfs) do
         it { expect(provider.options :lsfs).to be_empty }
       end
       context 'with option for rmfs: --globus-gridmap' do
-        before { resource[:options] = { '--globus-gridmap' => nil } }
+        before { resource[:options] = { '--globus-gridmap' => :undef } }
         it { expect(provider.options :lsfs).to be_empty }
       end
       context 'with one valid lsfs option' do
@@ -142,7 +142,7 @@ describe Puppet::Type.type(:xtreemfs_volume).provider(:xtreemfs) do
           }
         end
         it { expect(provider.options :lsfs).not_to be_empty }
-        it { expect(provider.options :lsfs).to eq(['--pem-certificate-file-path /etc/ssl/certs/slave4.vm.crt']) }
+        it { expect(provider.options :lsfs).to eq(['--pem-certificate-file-path', '/etc/ssl/certs/slave4.vm.crt']) }
       end
       context 'with two valid lsfs options' do
         before do
@@ -154,8 +154,8 @@ describe Puppet::Type.type(:xtreemfs_volume).provider(:xtreemfs) do
         it { expect(provider.options :lsfs).not_to be_empty }
         it do
           expect(provider.options :lsfs).to eq([
-            '--pem-certificate-file-path /etc/ssl/certs/slave4.vm.crt',
-            '--pem-private-key-file-path /etc/ssl/private/slave4.vm.pem',
+            '--pem-certificate-file-path', '/etc/ssl/certs/slave4.vm.crt',
+            '--pem-private-key-file-path', '/etc/ssl/private/slave4.vm.pem'
           ])
         end
       end
@@ -180,8 +180,8 @@ describe Puppet::Type.type(:xtreemfs_volume).provider(:xtreemfs) do
         it { expect(provider.options :rmfs).not_to be_empty }
         it do
           expect(provider.options :rmfs).to eq([
-            '--pem-certificate-file-path /etc/ssl/certs/slave4.vm.crt',
-            '--unicore-gridmap',
+            '--pem-certificate-file-path', '/etc/ssl/certs/slave4.vm.crt',
+            '--unicore-gridmap'
           ])
         end
       end
@@ -197,9 +197,26 @@ describe Puppet::Type.type(:xtreemfs_volume).provider(:xtreemfs) do
       it { expect(provider.options :mkfs).not_to be_empty }
       it 'should passthru all options, without filtering' do
         expect(provider.options :mkfs).to eq([
-          '--jennifer-connelly dressed',
-          '--pem-certificate-file-path /etc/ssl/certs/slave4.vm.crt',
+          '--jennifer-connelly', 'dressed',
+          '--pem-certificate-file-path', '/etc/ssl/certs/slave4.vm.crt',
           '--unicore-gridmap'
+        ])
+      end
+    end
+
+    context 'for mkfs_xtreemfs command with valid options and mkfs without value' do
+      before do
+        resource[:options] = { 
+          '--pem-certificate-file-path' => '/etc/ssl/certs/slave4.vm.crt',
+          '--chown-non-root'            => :undef
+        }
+      end
+      it { expect(provider.options :mkfs).not_to be_empty }
+      it 'should passthru all options, without filtering' do
+        expect(provider.options :mkfs).to eq([
+          '--chown-non-root',
+          '--pem-certificate-file-path',
+          '/etc/ssl/certs/slave4.vm.crt'
         ])
       end
     end
