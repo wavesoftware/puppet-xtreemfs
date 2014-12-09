@@ -10,12 +10,20 @@ module Type
   # Common abstract type for replicable resources that is policy and replicate
   class Replicable
 
-    # Configure a type
-    #
-    # @param type [Puppet::Type::Xtreemfs_replicate,Puppet::Type::Xtreemfs_policy] a child type 
-    # @return [block] a configured block
-    def self.configure type
+    # A child type
+    # @return [Puppet::Type::Xtreemfs_replicate,Puppet::Type::Xtreemfs_policy] a child type
+    attr_accessor :type
 
+    # A constructor
+    #
+    # @param type [Puppet::Type::Xtreemfs_replicate,Puppet::Type::Xtreemfs_policy] a child type
+    def initialize type
+      @type = type
+    end
+
+    # Configure a policy property
+    # @return [Puppet::Type::Xtreemfs_replicate,Puppet::Type::Xtreemfs_policy] a child type
+    def configure_policy
       type.newproperty :policy do
         desc <<-eos
         The replication policy defines how a file is replicated. The policy
@@ -38,7 +46,11 @@ module Type
           value.to_s
         end
       end
+    end
 
+    # Configure a factor property
+    # @return [Puppet::Type::Xtreemfs_replicate,Puppet::Type::Xtreemfs_policy] a child type
+    def configure_factor
       type.newproperty :factor do
         desc <<-eos
         The replication factor defines on how many nodes a file is replicated.
@@ -57,13 +69,28 @@ module Type
           value.to_s.to_i
         end
       end
+    end
 
+    # Configure a global type validation
+    # @return [Puppet::Type::Xtreemfs_replicate,Puppet::Type::Xtreemfs_policy] a child type
+    def configure_global_validation
       type.validate do
         factor = self[:factor].to_s.to_i
         if self[:policy].to_sym == :none and factor > 1
           fail "If replication policy is set to `none`, you can't set replication factor to value greater then 1"
         end
       end
+    end
+
+    # Configure a type
+    #
+    # @param type [Puppet::Type::Xtreemfs_replicate,Puppet::Type::Xtreemfs_policy] a child type 
+    # @return [Puppet::Type::Xtreemfs_replicate,Puppet::Type::Xtreemfs_policy] a child type
+    def self.configure type
+      repl = Replicable.new type
+      repl.configure_policy
+      repl.configure_factor
+      repl.configure_global_validation
     end
 
   end
