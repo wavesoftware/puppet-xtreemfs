@@ -5,6 +5,10 @@ group :test do
   gem "rspec-puppet",           :require => false, :git => 'https://github.com/rodjek/rspec-puppet.git'
   gem "puppetlabs_spec_helper", :require => false
   gem "metadata-json-lint",     :require => false
+  gem "json",                   :require => false
+  if RUBY_VERSION < "1.9.0"
+    gem "rspec-its",              :require => false
+  end
 
   if RUBY_VERSION >= "1.9.0"
     gem "beaker", "~> 1.20.0",  :require => false
