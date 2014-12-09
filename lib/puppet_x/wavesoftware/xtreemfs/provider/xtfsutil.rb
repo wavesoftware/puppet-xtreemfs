@@ -39,6 +39,18 @@ module Provider
       @rawprops = props
     end
 
+    # Load a output for xtfsutil command for file
+    #
+    # @param file [String] a target file
+    # @return [String] output of xtfsutil command
+    def self.xtfsutil_cmd file
+      output = xtfsutil file
+      unless /Path \(on volume\)/m.match output
+        fail 'Tring to replicate file, that is not on XtreemFS volume? :' + output
+      end
+      return output
+    end
+
     # Corrects a policy that is outputed by xtfsutil commandline tool
     #
     # @param value [String] an input form
@@ -71,8 +83,15 @@ module Provider
     # @return [nil]
     def flush
       validate
+      flush_all
       flush_policy
       flush_factor
+      return nil
+    end
+
+    # Flushes all other properties
+    # @return [nil] nothing
+    def flush_all
       return nil
     end
 
@@ -97,7 +116,7 @@ module Provider
         if factor > 1
           unreplicate
         end
-        xtfsutil ['--set-replication-policy', @property_flush[:policy], resource[:file]]
+        set_policy
         @property_hash[:policy] = @property_flush[:policy]
       end
       return nil

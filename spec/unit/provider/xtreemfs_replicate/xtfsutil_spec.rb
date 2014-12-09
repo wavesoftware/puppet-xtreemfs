@@ -128,7 +128,7 @@ describe Puppet::Type.type(:xtreemfs_replicate).provider(:xtfsutil) do
           end
           
           it { should_not be_nil }
-          its('policy') { should eq 'none' }
+          its('policy') { should eq :none }
           its('factor') { should eq 1 }
         end
 
@@ -139,7 +139,7 @@ describe Puppet::Type.type(:xtreemfs_replicate).provider(:xtfsutil) do
           end
           
           it { should_not be_nil }
-          its('policy') { should eq 'WqRq' }
+          its('policy') { should eq :WqRq }
           its('factor') { should eq 2 }
         end
 

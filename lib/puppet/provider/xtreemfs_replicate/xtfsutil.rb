@@ -13,10 +13,7 @@ Puppet::Type.type(:xtreemfs_replicate).provide(:xtfsutil,
   # @param file [String] a file name
   # @return [Hash] a raw data hash
   def self.prefetch_one file
-    output = xtfsutil file
-    unless /Path \(on volume\)/m.match output
-      fail 'Tring to replicate file, that is not on XtreemFS volume? :' + output
-    end
+    output = xtfsutil_cmd file
     propss, replicass = output.split /Replicas:/
     re = /(.+)\s{2,}(.+)/
     props = {}
@@ -57,7 +54,7 @@ Puppet::Type.type(:xtreemfs_replicate).provide(:xtfsutil,
     props = prefetch_one file
     provider = new(
       :file   => file,
-      :policy => correct_policy(props['Replication policy']),
+      :policy => correct_policy(props['Replication policy']).to_sym,
       :factor => props['Replicas'].size
     )
     provider.rawprops = props
@@ -76,6 +73,13 @@ Puppet::Type.type(:xtreemfs_replicate).provide(:xtfsutil,
       fail "A file for replicate must be regular file, but #{type} given - #{resource[:file]}"
     end
     nil
+  end
+
+  # Actually sets a policy to the OS
+  #
+  # @return [String] a command output
+  def set_policy
+    xtfsutil ['--set-replication-policy', @property_flush[:policy], resource[:file]]
   end
 
   # Ensures that target file has no replicas
