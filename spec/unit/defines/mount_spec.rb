@@ -33,8 +33,8 @@ describe 'xtreemfs::mount', :type => :define do
       should contain_xtreemfs__mount('/mnt/my-xtreemfs-mount').with(
         'ensure'      => 'mounted',
         'volume'      => 'myVolume',
-        'dir_service' => nil,
-        'atboot'      => true,
+        'dir_host'    => nil,
+        'atboot'      => false,
         'options'     => 'defaults,allow_other'
       )
     end
@@ -44,7 +44,7 @@ describe 'xtreemfs::mount', :type => :define do
         'ensure'      => 'mounted',
         'device'      => 'slave1.vm/myVolume',
         'fstype'      => 'xtreemfs',
-        'atboot'      => true,
+        'atboot'      => false,
         'options'     => 'defaults,allow_other'
       ).that_requires('Anchor[xtreemfs::service]')
     end

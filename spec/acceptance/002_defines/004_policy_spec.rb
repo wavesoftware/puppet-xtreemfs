@@ -4,7 +4,7 @@ describe 'xtreemfs::policy define', :unless => UNSUPPORTED_PLATFORMS.include?(fa
 
   shared_pp = <<-eos
     class { 'xtreemfs::settings':
-      dir_service => 'localhost',
+      dir_host => 'localhost',
     }
     include xtreemfs::role::directory
     include xtreemfs::role::metadata

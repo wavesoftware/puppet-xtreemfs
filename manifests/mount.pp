@@ -10,8 +10,12 @@
 #     A name of volume that is active in directory service
 # [*ensure*]
 #     Standard ensure property. Can be: +mounted+, +unmounted+ (same as +present+) or +absent+
-# [*dir_service*]
-#     A hostname of directory service
+# [*dir_host*]
+#     Provide an host to where metadata and storage nodes will be connecting, defaults: <tt>$::fqdn</tt>
+# [*dir_port*]
+#     (Optional) A port for directory service connection
+# [*dir_protocol*]
+#     (Optional) A protocol for directory service connection
 # [*atboot*]
 #     Should this mount be active also at boot time? If +true+, it will be added to system +/etc/fstab+
 # [*options*]
@@ -19,11 +23,13 @@
 #
 define xtreemfs::mount (
   $volume,
-  $mountpoint  = $name,
-  $ensure      = 'mounted',
-  $dir_service = undef,
-  $atboot      = true,
-  $options     = 'defaults,allow_other',
+  $mountpoint   = $name,
+  $ensure       = 'mounted',
+  $dir_host     = undef,
+  $dir_port     = undef,
+  $dir_protocol = undef,
+  $atboot       = false,
+  $options      = 'defaults,allow_other',
 ) {
   include xtreemfs::internal::packages::client
   include xtreemfs::internal::workflow
@@ -31,10 +37,7 @@ define xtreemfs::mount (
 
   validate_string($options)
 
-  $host = $dir_service ? {
-    undef   => $xtreemfs::settings::dir_service,
-    default => $dir_service,
-  }
+  $host = directory_address($dir_host, $dir_port, $dir_protocol, $xtreemfs::settings::dir_service)
 
   if defined(Xtreemfs::Volume[$volume]) {
     if $ensure == 'present' or $ensure == 'mounted' {

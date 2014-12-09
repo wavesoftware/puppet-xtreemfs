@@ -4,7 +4,7 @@ describe 'xtreemfs::replicate define', :unless => UNSUPPORTED_PLATFORMS.include?
 
   shared_pp = <<-eos
     class { 'xtreemfs::settings':
-      dir_service => 'localhost',
+      dir_host => 'localhost',
     }
     include xtreemfs::role::directory
     include xtreemfs::role::metadata

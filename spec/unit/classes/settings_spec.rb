@@ -11,7 +11,7 @@ describe 'xtreemfs::settings', :type => :class do
   it { should compile.with_all_deps }
   it do
     should contain_class("xtreemfs::settings").with(
-      'dir_service'      => 'somehost.localdomain',
+      'dir_host'         => 'somehost.localdomain',
       'object_dir'       => '/var/lib/xtreemfs',
       'install_packages' => true,
       'add_repo'         => true,

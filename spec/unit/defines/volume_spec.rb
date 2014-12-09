@@ -18,7 +18,7 @@ describe 'xtreemfs::volume', :type => :define do
     it do
       should contain_xtreemfs__volume('myVolume').with(
         'ensure'      => 'present',
-        'dir_service' => nil,
+        'dir_host'    => nil,
         'options'     => {}
       )
     end
@@ -34,9 +34,10 @@ describe 'xtreemfs::volume', :type => :define do
   describe 'should work with all parameters' do
     let :params do
       {
-        :ensure      => 'absent',
-        :dir_service => 'dir-service.example.org',
-        :options     => {
+        :ensure       => 'absent',
+        :dir_host     => 'dir-service.example.org',
+        :dir_protocol => 'pbrpcs',
+        :options      => {
           '--pem-certificate-file-path' => '/etc/ssl/certs/slave1-crt.pem',
           '--pem-private-key-file-path' => '/etc/ssl/private/slave1-key.pem',
         },
@@ -45,7 +46,7 @@ describe 'xtreemfs::volume', :type => :define do
     it do
       should contain_xtreemfs_volume('myVolume').with(
         'ensure'  => 'absent',
-        'host'    => 'dir-service.example.org',
+        'host'    => 'pbrpcs://dir-service.example.org',
         'options' => {
           '--pem-certificate-file-path' => '/etc/ssl/certs/slave1-crt.pem',
           '--pem-private-key-file-path' => '/etc/ssl/private/slave1-key.pem',

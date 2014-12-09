@@ -6,7 +6,7 @@ describe 'xtreemfs::volume define', :unless => UNSUPPORTED_PLATFORMS.include?(fa
     
     pp = <<-eos
     class { 'xtreemfs::settings':
-      dir_service => 'localhost',
+      dir_host => 'localhost',
     }
     include xtreemfs::role::directory
     include xtreemfs::role::metadata
@@ -27,7 +27,7 @@ describe 'xtreemfs::volume define', :unless => UNSUPPORTED_PLATFORMS.include?(fa
   describe 'purging with defaults' do
     pp = <<-eos
     class { 'xtreemfs::settings':
-      dir_service => 'localhost',
+      dir_host => 'localhost',
     }
     include xtreemfs::role::directory
     include xtreemfs::role::metadata
@@ -50,7 +50,7 @@ describe 'xtreemfs::volume define', :unless => UNSUPPORTED_PLATFORMS.include?(fa
     
     pp = <<-eos
     class { 'xtreemfs::settings':
-      dir_service => 'localhost',
+      dir_host => 'localhost',
     }
     include xtreemfs::role::directory
     include xtreemfs::role::metadata
@@ -79,7 +79,7 @@ describe 'xtreemfs::volume define', :unless => UNSUPPORTED_PLATFORMS.include?(fa
   describe 'purging with various options' do
     pp = <<-eos
     class { 'xtreemfs::settings':
-      dir_service => 'localhost',
+      dir_host => 'localhost',
     }
     include xtreemfs::role::directory
     include xtreemfs::role::metadata

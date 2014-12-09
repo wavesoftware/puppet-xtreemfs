@@ -48,7 +48,7 @@ describe 'xtreemfs::role::metadata', :type => :class do
     end
     context 'with params specified: dir_service => "dir.example.vm"' do
       let :params do
-        { :dir_service => 'dir.example.vm' }
+        { :dir_host => 'dir.example.vm' }
       end
       it do 
         should contain_class('xtreemfs::internal::configure::metadata').with( 

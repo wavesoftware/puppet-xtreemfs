@@ -4,8 +4,12 @@
 #
 # === Settings
 #
-# [*dir_service*]      
+# [*dir_host*]
 #     Provide an host to where metadata and storage nodes will be connecting, defaults: <tt>$::fqdn</tt>
+# [*dir_port*]
+#     (Optional) A port for directory service connection
+# [*dir_protocol*]
+#     (Optional) A protocol for directory service connection
 # [*install_packages*]
 #     If set to +true+ will install packages of XtreemFS, defaults: +true+
 # [*add_repo*]
@@ -15,7 +19,9 @@
 #     http://www.xtreemfs.org/xtfs-guide-1.5/index.html#tth_sEc3.2.6
 #
 class xtreemfs::role::metadata (
-  $dir_service      = $xtreemfs::settings::dir_service,
+  $dir_host         = undef,
+  $dir_port         = undef,
+  $dir_protocol     = undef,
   $install_packages = $xtreemfs::settings::install_packages,
   $add_repo         = $xtreemfs::settings::add_repo,
   $properties       = $xtreemfs::settings::properties,
@@ -29,9 +35,11 @@ class xtreemfs::role::metadata (
     }
     include xtreemfs::internal::packages::server
   }
+
+  $host = directory_address($dir_host, $dir_port, $dir_protocol, $xtreemfs::settings::dir_service)
   
   class { 'xtreemfs::internal::configure::metadata':
-    dir_service => $dir_service,
+    dir_service => $host,
     properties  => $properties,
   }
   

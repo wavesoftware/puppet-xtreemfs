@@ -5,7 +5,7 @@ describe 'xtreemfs::mount define', :unless => UNSUPPORTED_PLATFORMS.include?(fac
   describe 'fail without volume' do
     pp = <<-eos
     class { 'xtreemfs::settings':
-      dir_service => 'localhost',
+      dir_host => 'localhost',
     }
     include xtreemfs::role::directory
     include xtreemfs::role::metadata
@@ -24,7 +24,7 @@ describe 'xtreemfs::mount define', :unless => UNSUPPORTED_PLATFORMS.include?(fac
     
     pp = <<-eos
     class { 'xtreemfs::settings':
-      dir_service => 'localhost',
+      dir_host => 'localhost',
     }
     include xtreemfs::role::directory
     include xtreemfs::role::metadata
@@ -60,7 +60,7 @@ describe 'xtreemfs::mount define', :unless => UNSUPPORTED_PLATFORMS.include?(fac
   describe 'purging with defaults' do
     pp = <<-eos
     class { 'xtreemfs::settings':
-      dir_service => 'localhost',
+      dir_host => 'localhost',
     }
     include xtreemfs::role::directory
     include xtreemfs::role::metadata

@@ -4,8 +4,12 @@
 #
 # === Settings
 #
-# [*dir_service*]
+# [*dir_host*]
 #     Provide an host to where metadata and storage nodes will be connecting, defaults: <tt>$::fqdn</tt>
+# [*dir_port*]
+#     A port for directory service connection
+# [*dir_protocol*]
+#     A protocol for directory service connection
 # [*object_dir*]
 #     A direcory where storage nodes will hold their replicated data. Good idea is to provide 
 #     a directory on secure RAID drive, defaults: +/var/lib/xtreemfs+
@@ -18,7 +22,9 @@
 #     http://www.xtreemfs.org/xtfs-guide-1.5/index.html#tth_sEc3.2.6
 #
 class xtreemfs::settings (
-  $dir_service      = $::fqdn,
+  $dir_host         = $::fqdn,
+  $dir_port         = undef,
+  $dir_protocol     = undef,
   $object_dir       = '/var/lib/xtreemfs',
   $install_packages = true,
   $add_repo         = true,
@@ -29,4 +35,6 @@ class xtreemfs::settings (
   $flavour  = $xtreemfs::internal::settings::flavour
   $key      = $xtreemfs::internal::settings::key
   $repobase = $xtreemfs::internal::settings::repobase
+
+  $dir_service = directory_address($dir_host, $dir_port, $dir_protocol)
 }
