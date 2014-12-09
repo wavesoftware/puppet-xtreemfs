@@ -37,7 +37,7 @@ RSpec.configure do |c|
   # Configure all nodes in nodeset
   c.before :suite do
     # Install module and dependencies
-    puppet_module_install(:source => proj_root, :module_name => 'xtreemfs')
+    copy_module_to(:source => proj_root, :module_name => 'xtreemfs')
 
     hosts.each do |host|
       on host, "/bin/touch #{default['puppetpath']}/hiera.yaml"
