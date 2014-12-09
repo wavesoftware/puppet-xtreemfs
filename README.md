@@ -54,12 +54,16 @@ include xtreemfs::role::storage
 
 ####Hiera configuration
 
- - `xtreemfs::settings::dir_service`
+ - `xtreemfs::settings::dir_host`
      - Provide an host to where metadata and storage nodes will be connecting, defaults: `$::fqdn`
+ - `xtreemfs::settings::dir_port`
+     - A port for directory service connection
+ - `xtreemfs::settings::dir_protocol`
+     - A protocol for directory service connection
  - `xtreemfs::settings::object_dir`
      - A direcory where storage nodes will hold their replicated data. Good idea is to provide a directory on secure RAID drive, defaults: `/var/lib/xtreemfs`
  - `xtreemfs::settings::install_packages`
-     - If set to `true` will install packages of XtreemFS, defaults: `true`
+     - If set to `true` will install packages of XtreemFS, defaults: `true`di
  - `xtreemfs::settings::add_repo`
      - If set to `true` will add to system repository for XtreemFS, defaults: `true`
  - `xtreemfs::settings::properties`
@@ -79,7 +83,7 @@ Metadata server
 
 ```puppet
 class { 'xtreemfs::role::metadata':
-  dir_service => 'dir.vagrant.dev',
+  dir_host => 'dir.vagrant.dev',
 }
 ```
 
@@ -87,8 +91,8 @@ Storage node(s)
 
 ```puppet
 class { 'xtreemfs::role::storage':
-  dir_service => 'dir.vagrant.dev',
-  object_dir  => '/mnt/sdb1/xtreem', # actual object will be in: /mnt/sdb1/xtreem/objs 
+  dir_host   => 'dir.vagrant.dev',
+  object_dir => '/mnt/sdb1/xtreem', # actual object will be in: /mnt/sdb1/xtreem/objs 
 }
 ```
 
@@ -106,8 +110,8 @@ There are many ways to set up a XtreemFS volume using the `xtreemfs::volume` def
 
 ```puppet
 xtreemfs::volume { 'myVolume':
-  ensure      => 'present',
-  dir_service => 'dir.vagrant.dev',
+  ensure   => 'present',
+  dir_host => 'dir.vagrant.dev',
 }
 ```
 In this example, you would create volume with default parameters.
@@ -118,9 +122,9 @@ To manage mount point:
 
 ```puppet
 xtreemfs::mount { '/mnt/xtreemfs':
-  ensure      => 'mounted',
-  volume      => 'myVolume',
-  dir_service => 'dir.vagrant.dev',
+  ensure   => 'mounted',
+  volume   => 'myVolume',
+  dir_host => 'dir.vagrant.dev',
 }
 ```
 
