@@ -80,6 +80,25 @@ describe Puppet::Type.type(:xtreemfs_volume).provider(:xtreemfs) do
     allow(Facter).to receive(:value).with(:fqdn).and_return('slave4.vm')
   end
 
+  describe 'dashize' do
+    context 'on deprecated dashed option: "--pem-certificate-file-path"' do
+      subject { '--pem-certificate-file-path' }
+      message = "Passing options with dashes are deprecated. Pass only opt name. You have given: '--pem-certificate-file-path'"
+      before { expect(Puppet).to receive(:warning).with(message) }
+      it { provider.dashize(subject).should eq('--pem-certificate-file-path') }
+    end
+    context 'on short option: "d"' do
+      subject { 'd' }
+      before { expect(Puppet).not_to receive(:warning) }
+      it { provider.dashize(subject).should eq('-d') }
+    end
+    context 'on long option: "pem-certificate-file-path"' do
+      subject { 'pem-certificate-file-path' }
+      before { expect(Puppet).not_to receive(:warning) }
+      it { provider.dashize(subject).should eq('--pem-certificate-file-path') }
+    end
+  end
+
   describe 'getting instances' do
     it { expect(provider.class.instances).not_to be_empty }
   end
@@ -135,7 +154,7 @@ describe Puppet::Type.type(:xtreemfs_volume).provider(:xtreemfs) do
         before { resource[:options] = { '--globus-gridmap' => :undef } }
         it { expect(provider.options :lsfs).to be_empty }
       end
-      context 'with one valid lsfs option' do
+      context 'with one valid lsfs option (with deprecated hypens)' do
         before do
           resource[:options] = { 
             '--pem-certificate-file-path' =>  '/etc/ssl/certs/slave4.vm.crt'
@@ -144,11 +163,20 @@ describe Puppet::Type.type(:xtreemfs_volume).provider(:xtreemfs) do
         it { expect(provider.options :lsfs).not_to be_empty }
         it { expect(provider.options :lsfs).to eq(['--pem-certificate-file-path', '/etc/ssl/certs/slave4.vm.crt']) }
       end
+      context 'with one valid lsfs option' do
+        before do
+          resource[:options] = { 
+            'pem-certificate-file-path' =>  '/etc/ssl/certs/slave4.vm.crt'
+          }
+        end
+        it { expect(provider.options :lsfs).not_to be_empty }
+        it { expect(provider.options :lsfs).to eq(['--pem-certificate-file-path', '/etc/ssl/certs/slave4.vm.crt']) }
+      end
       context 'with two valid lsfs options' do
         before do
           resource[:options] = { 
-            '--pem-certificate-file-path' => '/etc/ssl/certs/slave4.vm.crt',
-            '--pem-private-key-file-path' => '/etc/ssl/private/slave4.vm.pem'
+            'pem-certificate-file-path' => '/etc/ssl/certs/slave4.vm.crt',
+            'pem-private-key-file-path' => '/etc/ssl/private/slave4.vm.pem'
           }
         end
         it { expect(provider.options :lsfs).not_to be_empty }
@@ -161,20 +189,20 @@ describe Puppet::Type.type(:xtreemfs_volume).provider(:xtreemfs) do
       end
     end
     context 'for rmfs_xtreemfs command' do
-      context 'with invalid option: --non-existing-opt' do
-        before { resource[:options] = { '--non-existing-opt' => 45 } }
+      context 'with invalid option: non-existing-opt' do
+        before { resource[:options] = { 'non-existing-opt' => 45 } }
         it { expect(provider.options :rmfs).to be_empty }
       end
-      context 'with option for rmfs: --globus-gridmap' do
-        before { resource[:options] = { '--globus-gridmap' => nil } }
+      context 'with option for rmfs: globus-gridmap' do
+        before { resource[:options] = { 'globus-gridmap' => nil } }
         it { expect(provider.options :rmfs).to eq(['--globus-gridmap']) }
       end
       context 'with valid lsfs and rmfs options and non existent one' do
         before do
           resource[:options] = { 
-            '--pem-certificate-file-path' => '/etc/ssl/certs/slave4.vm.crt',
-            '--unicore-gridmap'           => nil,
-            '--jennifer-connelly'         => 'naked'
+            'pem-certificate-file-path' => '/etc/ssl/certs/slave4.vm.crt',
+            'unicore-gridmap'           => nil,
+            'jennifer-connelly'         => 'naked'
           }
         end
         it { expect(provider.options :rmfs).not_to be_empty }
@@ -189,9 +217,9 @@ describe Puppet::Type.type(:xtreemfs_volume).provider(:xtreemfs) do
     context 'for mkfs_xtreemfs command with valid lsfs and rmfs options and non existent one' do
       before do
         resource[:options] = { 
-          '--pem-certificate-file-path' => '/etc/ssl/certs/slave4.vm.crt',
-          '--unicore-gridmap'           => nil,
-          '--jennifer-connelly'         => 'dressed'
+          'pem-certificate-file-path' => '/etc/ssl/certs/slave4.vm.crt',
+          'unicore-gridmap'           => nil,
+          'jennifer-connelly'         => 'dressed'
         }
       end
       it { expect(provider.options :mkfs).not_to be_empty }
@@ -207,8 +235,8 @@ describe Puppet::Type.type(:xtreemfs_volume).provider(:xtreemfs) do
     context 'for mkfs_xtreemfs command with valid options and mkfs without value' do
       before do
         resource[:options] = { 
-          '--pem-certificate-file-path' => '/etc/ssl/certs/slave4.vm.crt',
-          '--chown-non-root'            => :undef
+          'pem-certificate-file-path' => '/etc/ssl/certs/slave4.vm.crt',
+          'chown-non-root'            => :undef
         }
       end
       it { expect(provider.options :mkfs).not_to be_empty }

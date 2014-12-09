@@ -59,10 +59,10 @@ describe 'xtreemfs::volume define', :unless => UNSUPPORTED_PLATFORMS.include?(fa
     xtreemfs::volume { 'vmail':
       ensure      => 'present',
       options     => {
-        '--admin_password' => 'some-passwd',
-        '-d'               => 'DEBUG',
-        '--chown-non-root' => undef,
-        '--log-file-path'  => '/tmp/xtreemfs.log',
+        'admin_password' => 'some-passwd',
+        'd'              => 'DEBUG',
+        'chown-non-root' => undef,
+        'log-file-path'  => '/tmp/xtreemfs.log',
       },
     }
     eos
@@ -88,10 +88,10 @@ describe 'xtreemfs::volume define', :unless => UNSUPPORTED_PLATFORMS.include?(fa
     xtreemfs::volume { 'vmail':
       ensure      => 'absent',
       options     => {
-        '--admin_password' => 'some-passwd',
-        '-d'               => 'DEBUG',
-        '--chown-non-root' => undef,
-        '--log-file-path'  => '/tmp/xtreemfs.log',
+        'admin_password' => 'some-passwd',
+        'd'              => 'DEBUG',
+        'chown-non-root' => undef,
+        'log-file-path'  => '/tmp/xtreemfs.log',
       },
     }
     eos

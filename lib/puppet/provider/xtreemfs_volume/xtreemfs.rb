@@ -189,13 +189,31 @@ Puppet::Type.type(:xtreemfs_volume).provide :xtreemfs do
         value = resource[:options][key]
         value = nil if value == :undef
         value = value.to_s
-        if predicate(type).call(key)
-          opts << key.strip
+        dashized = dashize(key.strip)
+        if predicate(type).call(dashized)
+          opts << dashized
           opts << value.strip unless value.strip.empty?
         end
       end
     end
     return opts
+  end
+
+  # Hypenize an opt, that meens adds dashes as prefix
+  #
+  # @param opt [String] a given option
+  # @return [String] an option with dashes added
+  def dashize opt
+    if opt.start_with? '-'
+      Puppet.warning "Passing options with dashes are deprecated. Pass only opt name. You have given: '#{opt}'"
+      return opt
+    else
+      if opt.size > 1
+        return "--#{opt}"
+      else
+        return "-#{opt}"
+      end
+    end
   end
 
   # A predicate for type, that returns +true+ if command line opts is applicable to given command type
