@@ -1,0 +1,85 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+
+  # Every Vagrant virtual environment requires a box to build off of.
+  config.vm.box = "puppetlabs/ubuntu-14.04-64-puppet"
+
+  config.vm.synced_folder '../', '/etc/puppet/modules/xtreemfs'
+
+  # Enable landrush
+  config.landrush.enabled = true
+
+  config.vm.define :master do |node|
+    # Setting a hostname
+    node.vm.hostname = 'master.vagrant.dev'
+
+    # Provider configuration
+    node.vm.provider :virtualbox do |v|
+      v.memory = 512
+      v.cpus   = 1
+    end
+
+    # A puppet server provision
+    node.vm.provision :puppet do |puppet|
+      puppet.manifests_path = '.'
+      puppet.manifest_file  = 'prepare.pp'
+    end
+
+    # A puppet server provision
+    node.vm.provision :puppet do |puppet|
+      puppet.manifests_path = '.'
+      puppet.manifest_file  = 'master.pp'
+    end
+  end
+
+  config.vm.define :slave1 do |node|
+    # Setting a hostname
+    node.vm.hostname = 'slave1.vagrant.dev'
+
+    # Provider configuration
+    node.vm.provider :virtualbox do |v|
+      v.memory = 512
+      v.cpus   = 1
+    end
+
+    # A puppet server provision
+    node.vm.provision :puppet do |puppet|
+      puppet.manifests_path = '.'
+      puppet.manifest_file  = 'prepare.pp'
+    end
+
+    # A puppet server provision
+    node.vm.provision :puppet do |puppet|
+      puppet.manifests_path = '.'
+      puppet.manifest_file  = 'slave1.pp'
+    end
+  end
+
+  config.vm.define :slave2 do |node|
+    # Setting a hostname
+    node.vm.hostname = 'slave2.vagrant.dev'
+
+    # Provider configuration
+    node.vm.provider :virtualbox do |v|
+      v.memory = 512
+      v.cpus   = 1
+    end
+
+    # A puppet server provision
+    node.vm.provision :puppet do |puppet|
+      puppet.manifests_path = '.'
+      puppet.manifest_file  = 'prepare.pp'
+    end
+
+    # A puppet server provision
+    node.vm.provision :puppet do |puppet|
+      puppet.manifests_path = '.'
+      puppet.manifest_file  = 'slave2.pp'
+    end
+  end
+end
