@@ -66,7 +66,7 @@ Puppet::Type.type(:xtreemfs_policy).provide(:xtfsutil,
   #
   # @return [nil]
   def validate
-    unless resource[:factor] > 1
+    if resource[:policy] != :none and resource[:factor] <= 1
       fail "A replication factor must be greater then 1"
     end
     unless File.exists? resource[:directory]

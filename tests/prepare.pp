@@ -7,7 +7,7 @@ package { ['git', 'ruby-dev']:
   ensure => 'installed',
 }
 
-$lock = "tests/vagrant/.vagrant/machines/${::hostname}/virtualbox/modules-installed"
+$lock = "tests/.vagrant/machines/${::hostname}/virtualbox/modules-installed"
 
 exec { 'librarian-puppet':
   command   => "librarian-puppet config path /etc/puppet/modules --global && librarian-puppet update --verbose && touch ${lock}",

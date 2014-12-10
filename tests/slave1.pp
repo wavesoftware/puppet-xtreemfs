@@ -1,13 +1,13 @@
 $dir = 'master.vagrant.dev'
 
 class { 'xtreemfs::settings':
-  dir_service => $dir
+  dir_host => $dir
 }
 include xtreemfs::role::storage
 
 xtreemfs::mount { '/mnt/xtreemfs-myvolume':
-  ensure      => 'mounted',
-  dir_service => $dir,
-  volume      => 'myVolume',
-  atboot      => false,
+  ensure   => 'mounted',
+  dir_host => $dir,
+  volume   => 'myVolume',
+  atboot   => false,
 }

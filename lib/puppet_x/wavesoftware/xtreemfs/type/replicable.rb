@@ -43,7 +43,7 @@ module Type
           elsif value == :all
             value = :WaR1
           end
-          value.to_s
+          value.to_sym
         end
       end
     end

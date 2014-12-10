@@ -9,7 +9,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Every Vagrant virtual environment requires a box to build off of.
   config.vm.box = "puppetlabs/ubuntu-14.04-64-puppet"
 
-  config.vm.synced_folder '../../', '/etc/puppet/modules/xtreemfs'
+  config.vm.synced_folder '../', '/etc/puppet/modules/xtreemfs'
 
   # Enable landrush
   config.landrush.enabled = true
@@ -32,7 +32,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     # A puppet server provision
     node.vm.provision :puppet do |puppet|
-      puppet.manifests_path = '..'
+      puppet.manifests_path = '.'
       puppet.manifest_file  = 'master.pp'
     end
   end
@@ -55,7 +55,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     # A puppet server provision
     node.vm.provision :puppet do |puppet|
-      puppet.manifests_path = '..'
+      puppet.manifests_path = '.'
       puppet.manifest_file  = 'slave1.pp'
     end
   end
@@ -78,7 +78,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     # A puppet server provision
     node.vm.provision :puppet do |puppet|
-      puppet.manifests_path = '..'
+      puppet.manifests_path = '.'
       puppet.manifest_file  = 'slave2.pp'
     end
   end

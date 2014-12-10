@@ -178,7 +178,7 @@ describe Puppet::Type.type(:xtreemfs_policy).provider(:xtfsutil) do
 
     context 'tring to set policy with factor eq 1' do
       before :each do
-        expect(provider).to receive(:resource).
+        expect(provider).to receive(:resource).at_least(:once).
           and_return({ :directory => '/mnt/xtfs/dir1', :policy => :WqRq, :factor => 1 })
       end
       it { expect{ subject }.to raise_error(Puppet::Error, /A replication factor must be greater then 1/) }
@@ -210,9 +210,9 @@ describe Puppet::Type.type(:xtreemfs_policy).provider(:xtfsutil) do
 
   describe 'flush all at once' do
     before :each do
-      expect(provider.class).to receive(:xtfsutil).once.with([
+      expect(provider.class).to receive(:xtfsutil).with([
         "--set-drp", 
-        "--replication-policy", "WqRq", 
+        "--replication-policy", :WqRq, 
         "--replication-factor", 2, 
         "/mnt/xtfs/directory1"
       ]).and_return('Updated default replication policy to: READONLY with 2 replicas')
