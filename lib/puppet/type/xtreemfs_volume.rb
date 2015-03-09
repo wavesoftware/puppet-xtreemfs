@@ -27,6 +27,7 @@ Puppet::Type.newtype(:xtreemfs_volume) do
   newparam(:host) do
     desc 'A host of volume, pass an directory service host here'
     fqdn = Facter.value(:fqdn)
+    fqdn = Facter.value(:hostname) if fqdn.nil?
     defaultto fqdn
   end
 
