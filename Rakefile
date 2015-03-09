@@ -27,9 +27,15 @@ RSpec::Core::RakeTask.new(:acceptance) do |t|
   t.pattern = 'spec/acceptance'
 end
 
+desc "Clean fixtures"
+task :clean_fixtures do
+  FileUtils.rmtree 'spec/fixtures/modules'
+end
+
 desc "Run syntax, lint, and spec tests."
 task :test => [
   :metadata,
+  :clean_fixtures,
   :syntax,
   :lint,
   :spec,
