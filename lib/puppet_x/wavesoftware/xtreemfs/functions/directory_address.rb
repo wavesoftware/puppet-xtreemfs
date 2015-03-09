@@ -49,7 +49,7 @@ class Functions
         address.scheme = uri.scheme
       end
     end
-    return address.to_s.gsub /^\/\//, ''
+    return address.to_s.gsub(/^\/\//, '')
   end
 
   private

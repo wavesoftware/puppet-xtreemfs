@@ -9,7 +9,15 @@ Puppet::Type.newtype :xtreemfs_policy do
     isnamevar
   end
 
-  Puppet_X::Wavesoftware::Xtreemfs::Type::Replicable.configure self
+  newproperty :factor do
+    Puppet_X::Wavesoftware::Xtreemfs::Type::Replicable.configure_factor(self)
+  end
+
+  newproperty :policy do
+    Puppet_X::Wavesoftware::Xtreemfs::Type::Replicable.configure_policy(self)
+  end
+
+  Puppet_X::Wavesoftware::Xtreemfs::Type::Replicable.configure_global_validation(self)
 
   validate do
     factor = self[:factor].to_s.to_i

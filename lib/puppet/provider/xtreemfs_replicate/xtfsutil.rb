@@ -14,7 +14,7 @@ Puppet::Type.type(:xtreemfs_replicate).provide(:xtfsutil,
   # @return [Hash] a raw data hash
   def self.prefetch_one file
     output = xtfsutil_cmd file
-    propss, replicass = output.split /Replicas:/
+    propss, replicass = output.split(/Replicas:/)
     re = /(.+)\s{2,}(.+)/
     props = {}
     propss.split("\n").each do |line|
