@@ -3,7 +3,7 @@
   "version": "0.6.1",
   "author": "Krzysztof Suszynski",
   "summary": "The XtreemFS module allows you to easily manage XtreemFS installation, volumes and mounts",
-  "license": "Apache 2.0",
+  "license": "Apache-2.0",
   "source": "git://github.com/wavesoftware/puppet-xtreemfs.git",
   "project_page": "https://github.com/wavesoftware/puppet-xtreemfs",
   "issues_url": "https://github.com/wavesoftware/puppet-xtreemfs/issues",
