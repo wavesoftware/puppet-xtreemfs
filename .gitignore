@@ -9,3 +9,4 @@ doc/
 .tmp/
 Puppetfile.lock
 .librarian/
+log
