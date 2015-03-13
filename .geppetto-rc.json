@@ -1,0 +1,11 @@
+{
+  "excludes": [
+    "**/contrib/**",
+    "**/examples/**",
+    "**/vendor/**",
+    "**/.vendor/**",
+    "**/tests/**",
+    "**/spec/**",
+    "**/pkg/**"
+  ]
+}

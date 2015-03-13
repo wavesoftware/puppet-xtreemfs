@@ -85,17 +85,17 @@ describe Puppet::Type.type(:xtreemfs_volume).provider(:xtreemfs) do
       subject { '--pem-certificate-file-path' }
       message = "Passing options with dashes are deprecated. Pass only opt name. You have given: '--pem-certificate-file-path'"
       before { expect(Puppet).to receive(:warning).with(message) }
-      it { provider.dashize(subject).should eq('--pem-certificate-file-path') }
+      it { expect(provider.dashize(subject)).to eq('--pem-certificate-file-path') }
     end
     context 'on short option: "d"' do
       subject { 'd' }
       before { expect(Puppet).not_to receive(:warning) }
-      it { provider.dashize(subject).should eq('-d') }
+      it { expect(provider.dashize(subject)).to eq('-d') }
     end
     context 'on long option: "pem-certificate-file-path"' do
       subject { 'pem-certificate-file-path' }
       before { expect(Puppet).not_to receive(:warning) }
-      it { provider.dashize(subject).should eq('--pem-certificate-file-path') }
+      it { expect(provider.dashize(subject)).to eq('--pem-certificate-file-path') }
     end
   end
 

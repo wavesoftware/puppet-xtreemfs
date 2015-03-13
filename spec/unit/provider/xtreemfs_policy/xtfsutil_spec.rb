@@ -80,24 +80,24 @@ describe Puppet::Type.type(:xtreemfs_policy).provider(:xtfsutil) do
   describe "parsing a default replication policy" do
     let(:method) { lambda { |str| provider.class.parse_drp(str) } }
     context 'when set to none' do
-      it { method.call('not set').should eq({ :policy => :none, :factor => 1 }) }
+      it { expect(method.call('not set')).to eq({ :policy => :none, :factor => 1 }) }
     end
     context 'when set to ronly with 2 replicas' do
       it do
-        method.call( 'ronly with 2 replicas, partial replicas' ).
-          should eq({ :policy => :ronly, :factor => 2 })
+        expect(method.call( 'ronly with 2 replicas, partial replicas' )).
+          to eq({ :policy => :ronly, :factor => 2 })
       end
     end
     context 'when set to WaR1 with 3 replicas' do
       it do
-        method.call( 'WaR1 with 3 replicas' ).
-          should eq({ :policy => :WaR1, :factor => 3 })
+        expect(method.call( 'WaR1 with 3 replicas' )).
+          to eq({ :policy => :WaR1, :factor => 3 })
       end
     end
     context 'when set to WqRq with 4 replicas' do
       it do
-        method.call( 'WqRq with 4 replicas' ).
-          should eq({ :policy => :WqRq, :factor => 4 })
+        expect(method.call( 'WqRq with 4 replicas' )).
+          to eq({ :policy => :WqRq, :factor => 4 })
       end
     end
   end
@@ -217,8 +217,8 @@ describe Puppet::Type.type(:xtreemfs_policy).provider(:xtfsutil) do
         "/mnt/xtfs/directory1"
       ]).and_return('Updated default replication policy to: READONLY with 2 replicas')
     end
-    it { provider.flush_all.should_not be_nil }
-    it { provider.flush_all.should match(/Updated.+READONLY with 2 replicas/) }
+    it { expect(provider.flush_all).not_to be_nil }
+    it { expect(provider.flush_all).to match(/Updated.+READONLY with 2 replicas/) }
   end
 
 end
