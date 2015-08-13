@@ -2,13 +2,14 @@ source ENV['GEM_SOURCE'] || 'https://rubygems.org'
 
 group :test do
   gem 'rake',                   :require => false
-  gem 'rspec-puppet',           :require => false, :git => 'https://github.com/rodjek/rspec-puppet.git'
+  gem 'rspec-puppet',           :require => false
   gem 'puppetlabs_spec_helper', :require => false
   gem 'metadata-json-lint',     :require => false
   gem 'json',                   :require => false
+  gem 'inch',                   :require => false
   if RUBY_VERSION < '1.9.0'
     gem 'rspec-its',            :require => false
-    gem 'rspec', '~> 3.1.0',    :require => false
+    gem 'rspec', '~> 3.0',      :require => false
   end
 
   if RUBY_VERSION >= '1.9.0'
@@ -25,15 +26,13 @@ group :test do
   if puppetver = ENV['PUPPET_VERSION']
     gem 'puppet', puppetver,    :require => false
   else
-    gem 'puppet',               :require => false
+    gem 'puppet', '~> 3.0',     :require => false
   end
 end
 
 group :development do
-  gem 'inch',                   :require => false
   gem 'vagrant-wrapper',        :require => false
   if RUBY_VERSION >= '1.9.0'
-    gem 'travis',               :require => false
     gem 'puppet-blacksmith',    :require => false
     gem 'guard-rake',           :require => false
     if RUBY_VERSION >= '2.0.0'
@@ -41,8 +40,7 @@ group :development do
     else
       gem 'pry-debugger',       :require => false
     end
-  else
-    gem 'pry', '~> 0.9.0',      :require => false
   end
+  gem 'pry', '~> 0.9.0',      :require => false if RUBY_VERSION < '1.9.0'
 end
 # vim:ft=ruby

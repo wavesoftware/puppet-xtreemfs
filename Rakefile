@@ -1,6 +1,7 @@
 require 'puppetlabs_spec_helper/rake_tasks'
 require 'puppet-lint/tasks/puppet-lint'
 require 'puppet-syntax/tasks/puppet-syntax'
+require 'inch/rake'
 
 # These two gems aren't always present, for instance
 # on Travis with --without development
@@ -27,6 +28,18 @@ RSpec::Core::RakeTask.new(:acceptance) do |t|
   t.pattern = 'spec/acceptance'
 end
 
+Inch::Rake::Suggest.new :inch, '--pedantic'
+
+desc "Validate manifests, templates, and ruby files"
+task :validate do
+  Dir['manifests/**/*.pp'].each do |manifest|
+    sh "puppet parser validate --noop #{manifest}"
+  end
+  Dir['templates/**/*.erb'].each do |template|
+    sh "erb -P -x -T '-' #{template} | ruby -c"
+  end
+end
+
 desc "Clean fixtures"
 task :clean_fixtures do
   FileUtils.rmtree 'spec/fixtures/modules'
@@ -38,5 +51,7 @@ task :test => [
   :clean_fixtures,
   :syntax,
   :lint,
+  :validate,
+  :inch,
   :spec,
 ]

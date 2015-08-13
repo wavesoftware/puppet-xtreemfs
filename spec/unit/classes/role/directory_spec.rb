@@ -61,19 +61,14 @@ describe 'xtreemfs::role::directory', :type => :class do
       it { should contain_class('apt::update') }
       it { should contain_class('apt::params') }
       it { should contain_anchor('apt_key 07D6EA4F2FA7E736 present') }
-      it { should contain_anchor('apt::source::xtreemfs') }
-      it { should contain_anchor('apt::update') }
       
       # Dodgy deps :-/
-      it { should contain_file('xtreemfs.list') }
       it { should contain_file('sources.list.d') }
       it { should contain_file('sources.list') }
       it { should contain_file('preferences.d') }
 
       # Even dodgier deps :-(
-      it { should contain_file('01proxy') }
       it { should contain_file('/etc/apt/apt.conf.d/15update-stamp') }
-      it { should contain_file('old-proxy-file') }
     end
   end
   context 'in CentOS 7' do
