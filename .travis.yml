@@ -1,8 +1,9 @@
 ---
-sudo: false
+sudo: true
 language: ruby
-bundler_args: --without development
-script: bundle exec rake test
+cache: bundler
+install: ./spec/scripts/install.sh
+script: ./spec/scripts/run.sh
 before_install: rm -f Gemfile.lock
 matrix:
   fast_finish: true
@@ -17,11 +18,9 @@ matrix:
     env: PUPPET_VERSION="~> 3.0"
   - rvm: 2.1.0
     env: PUPPET_VERSION="~> 3.0"
-  - rvm: 1.9.3
-    env: PUPPET_VERSION="~> 3.5" STRICT_VARIABLES="yes"
-  - rvm: 2.0.0
-    env: PUPPET_VERSION="~> 3.5" STRICT_VARIABLES="yes"
   - rvm: 2.1.0
-    env: PUPPET_VERSION="~> 3.5" STRICT_VARIABLES="yes"
+    env: PUPPET_VERSION="3.8.2" RS_SET="centos-6-x64-docker"
+  - rvm: 2.1.0
+    env: PUPPET_VERSION="3.8.2" RS_SET="ubuntu-server-1404-x64-docker"
 notifications:
   email: false

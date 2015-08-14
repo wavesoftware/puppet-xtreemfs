@@ -1,14 +1,21 @@
 require 'puppetlabs_spec_helper/rake_tasks'
 require 'puppet-lint/tasks/puppet-lint'
 require 'puppet-syntax/tasks/puppet-syntax'
-require 'inch/rake'
 
-# These two gems aren't always present, for instance
-# on Travis with --without development
+# These gems aren't always present
 begin
   require 'puppet_blacksmith/rake_tasks'
 rescue LoadError
 end
+
+test_tasks = [
+  :metadata,
+  :clean_fixtures,
+  :syntax,
+  :lint,
+  :validate,
+  :spec
+]
 
 PuppetLint.configuration.relative = true
 PuppetLint.configuration.send("disable_80chars")
@@ -28,7 +35,13 @@ RSpec::Core::RakeTask.new(:acceptance) do |t|
   t.pattern = 'spec/acceptance'
 end
 
-Inch::Rake::Suggest.new :inch, '--pedantic'
+begin
+  require 'inch/rake'
+  Inch::Rake::Suggest.new :inch, '--pedantic'
+  test_tasks << :inch
+rescue LoadError
+  # do nothing
+end
 
 desc "Validate manifests, templates, and ruby files"
 task :validate do
@@ -46,12 +59,5 @@ task :clean_fixtures do
 end
 
 desc "Run syntax, lint, and spec tests."
-task :test => [
-  :metadata,
-  :clean_fixtures,
-  :syntax,
-  :lint,
-  :validate,
-  :inch,
-  :spec,
-]
+task :test => test_tasks
+

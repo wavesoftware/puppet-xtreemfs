@@ -1,9 +1,9 @@
 HOSTS:
-  debian-76-x64:
+  debian-7-x64-docker:
     roles:
       - master
     platform: debian-7-amd64
-    box : puppetlabs/debian-7.6-64-nocm
+    image: debian:7
     hypervisor : vagrant
 CONFIG:
   type: foss

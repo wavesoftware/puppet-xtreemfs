@@ -2,17 +2,17 @@ source ENV['GEM_SOURCE'] || 'https://rubygems.org'
 
 group :test do
   gem 'rake',                   :require => false
-  gem 'rspec-puppet',           :require => false
   gem 'puppetlabs_spec_helper', :require => false
+  gem 'rspec-puppet',           :require => false
   gem 'metadata-json-lint',     :require => false
   gem 'json',                   :require => false
-  gem 'inch',                   :require => false
   if RUBY_VERSION < '1.9.0'
     gem 'rspec-its',            :require => false
-    gem 'rspec', '~> 3.0',      :require => false
+    gem 'rspec', '~> 3.1.0',      :require => false
   end
 
   if RUBY_VERSION >= '1.9.0'
+    gem 'inch',                 :require => false
     gem 'beaker',               :require => false
     gem 'beaker-rspec',         :require => false
     gem 'coveralls',            :require => false
@@ -23,10 +23,14 @@ group :test do
   else
     gem 'facter',               :require => false
   end
-  if puppetver = ENV['PUPPET_VERSION']
-    gem 'puppet', puppetver,    :require => false
+  puppetver = if RUBY_VERSION < '1.9.0' then '~> 2.7.0' else ENV['PUPPET_VERSION'] end
+  if puppetver
+    gem 'puppet', puppetver,            :require => false
+    if Gem::Requirement.new(puppetver) =~ Gem::Version.new('2.7.0')
+      gem 'hiera-puppet',               :require => false
+    end
   else
-    gem 'puppet', '~> 3.0',     :require => false
+    gem 'puppet', '~> 3.0',             :require => false
   end
 end
 
