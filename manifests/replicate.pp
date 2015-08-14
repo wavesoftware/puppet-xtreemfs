@@ -23,17 +23,17 @@
 # [*factor*]
 #     A replication factor. Defines on how many OSD servers target file should be replicated.
 define xtreemfs::replicate (
-  $policy = 'none',
-  $factor = 1,
-  $file   = $name,
+  $policy          = 'none',
+  $factor          = 1,
+  $file            = $name,
 ) {
   include xtreemfs::internal::packages::client
   include xtreemfs::internal::workflow
 
   xtreemfs_replicate { $file:
-    policy  => $policy,
-    factor  => $factor,
-    require => Anchor[$xtreemfs::internal::workflow::packages],
+    policy          => $policy,
+    factor          => $factor,
+    require         => Anchor[$xtreemfs::internal::workflow::packages],
   }
 
   if defined(File[$file]) {

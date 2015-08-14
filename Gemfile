@@ -8,7 +8,7 @@ group :test do
   gem 'json',                   :require => false
   if RUBY_VERSION < '1.9.0'
     gem 'rspec-its',            :require => false
-    gem 'rspec', '~> 3.1.0',      :require => false
+    gem 'rspec', '~> 3.1.0',    :require => false
   end
 
   if RUBY_VERSION >= '1.9.0'

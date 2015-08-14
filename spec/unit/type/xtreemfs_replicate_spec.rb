@@ -57,23 +57,23 @@ describe Puppet::Type.type(:xtreemfs_replicate) do
       end
       it "should not support 0 as a value for factor" do
         expect { described_class.new(:file => 'foo', :factor => 0) }.
-          to raise_error(Puppet::Error, /Replication factor must be integer value/)
+          to raise_error(Puppet::Error, /The replication factor must be integer value/)
       end
       it "should not support -3 as a value for factor" do
         expect { described_class.new(:file => 'foo', :factor => -3) }.
-          to raise_error(Puppet::Error, /Replication factor must be integer value/)
+          to raise_error(Puppet::Error, /The replication factor must be integer value/)
       end
       it "should not support sdfsd as a value for factor" do
         expect { described_class.new(:file => 'foo', :factor => 'sdfsd') }.
-          to raise_error(Puppet::Error, /Replication factor must be integer value/)
+          to raise_error(Puppet::Error, /The replication factor must be integer value/)
       end
       it "should not support true as a value for factor" do
         expect { described_class.new(:file => 'foo', :factor => true) }.
-          to raise_error(Puppet::Error, /Replication factor must be integer value/)
+          to raise_error(Puppet::Error, /The replication factor must be integer value/)
       end
       it "should not support 5.66 as a value for factor" do
         expect { described_class.new(:file => 'foo', :policy => :all, :factor => 5.66) }.
-          to raise_error(Puppet::Error, /Replication factor must be integer value/)
+          to raise_error(Puppet::Error, /The replication factor must be integer value/)
       end
     end
     describe 'policy and factor' do

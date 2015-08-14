@@ -51,9 +51,12 @@ describe Puppet::Type.type(:xtreemfs_policy).provider(:xtfsutil) do
 
   let(:sample_repl) do
     {
-      :directory => '/mnt/xtfs/directory1',
-      :policy    => :WqRq,
-      :factor    => 2,
+      :directory       => '/mnt/xtfs/directory1',
+      :policy          => :WqRq,
+      :factor          => 2,
+      :striping_policy => :RAID0,
+      :stripe_count    => 1,
+      :stripe_size     => 256
     }
   end
 
@@ -208,7 +211,21 @@ describe Puppet::Type.type(:xtreemfs_policy).provider(:xtfsutil) do
 
   end
 
-  describe 'flush all at once' do
+  describe 'flush dsp at once' do
+    before :each do
+      expect(provider.class).to receive(:xtfsutil).with([
+        "--set-dsp", 
+        "--striping-policy", :RAID0, 
+        "--striping-policy-width", 1,
+        "--striping-policy-stripe-size", 256, 
+        "/mnt/xtfs/directory1"
+      ]).and_return('Updated default striping policy to: STRIPING_POLICY_RAID0 / 1 / 256kB')
+    end
+    it { expect(provider.flush_dsp).not_to be_nil }
+    it { expect(provider.flush_dsp).to match('Updated default striping policy to: STRIPING_POLICY_RAID0 / 1 / 256kB') }
+  end
+
+  describe 'flush drp at once' do
     before :each do
       expect(provider.class).to receive(:xtfsutil).with([
         "--set-drp", 
@@ -217,8 +234,8 @@ describe Puppet::Type.type(:xtreemfs_policy).provider(:xtfsutil) do
         "/mnt/xtfs/directory1"
       ]).and_return('Updated default replication policy to: READONLY with 2 replicas')
     end
-    it { expect(provider.flush_all).not_to be_nil }
-    it { expect(provider.flush_all).to match(/Updated.+READONLY with 2 replicas/) }
+    it { expect(provider.flush_drp).not_to be_nil }
+    it { expect(provider.flush_drp).to match(/Updated.+READONLY with 2 replicas/) }
   end
 
 end

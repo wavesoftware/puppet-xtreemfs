@@ -33,11 +33,15 @@ Puppet::Type.type(:xtreemfs_policy).provide(:xtfsutil,
       return nil
     end
     props = prefetch_one directory
-    parsed = parse_drp props['Default Repl. p.']
+    drp = parse_drp props['Default Repl. p.']
+    dsp = parse_dsp props['Default Striping p.']
     provider = new(
-      :directory => directory,
-      :policy    => parsed[:policy],
-      :factor    => parsed[:factor]
+      :directory       => directory,
+      :policy          => drp[:policy],
+      :factor          => drp[:factor],
+      :striping_policy => dsp[:striping_policy],
+      :stripe_count    => dsp[:stripe_count],
+      :stripe_size     => dsp[:stripe_size]
     )
     provider.rawprops = props
     return provider
@@ -45,7 +49,7 @@ Puppet::Type.type(:xtreemfs_policy).provide(:xtfsutil,
 
   # Parse a default replication policy string
   #
-  # @param srp [String] a string that represents a default replication policy
+  # @param drp [String] a string that represents a default replication policy
   #     as outputed by xtfsutil command
   # @return [Hash] a parsed hash with +:policy+ and +:factor+ keys
   def self.parse_drp drp
@@ -58,6 +62,26 @@ Puppet::Type.type(:xtreemfs_policy).provide(:xtfsutil,
     if m
       parsed[:policy] = m[1].to_sym
       parsed[:factor] = m[2].to_i
+    end
+    return parsed
+  end
+  
+  # Parse a default striping policy string
+  #
+  # @param dsp [String] a string that represents a default sriping policy
+  #     as outputed by xtfsutil command
+  # @return [Hash] a parsed hash with +:striping_policy+, +:stripe_count+ and +:stripe_size+ keys
+  def self.parse_dsp dsp
+    parsed = {}
+    if dsp == 'not set'
+      return { :striping_policy => :none, :stripe_count => nil, :stripe_size => nil }
+    end
+    re = /^STRIPING_POLICY_([^\s]+)\s+\/\s+(\d+)\s+\/\s+(\d+)[kmg]B$/
+    m = re.match dsp
+    if m
+      parsed[:striping_policy] = m[1].to_sym
+      parsed[:stripe_count]    = m[2].to_i
+      parsed[:stripe_size]     = m[3].to_i
     end
     return parsed
   end
@@ -78,10 +102,26 @@ Puppet::Type.type(:xtreemfs_policy).provide(:xtfsutil,
     end
     return nil
   end
+  
+  # Flushes all dsp properties
+  # @return [nil] nothing
+  def flush_dsp
+    output = xtfsutil [
+      '--set-dsp', 
+      '--striping-policy',             resource[:striping_policy], 
+      '--striping-policy-width',       resource[:stripe_count], 
+      '--striping-policy-stripe-size', resource[:stripe_size], 
+      resource[:directory]
+    ]
+    @property_hash[:striping_policy] = resource[:striping_policy]
+    @property_hash[:stripe_count]    = resource[:stripe_count]
+    @property_hash[:stripe_size]     = resource[:stripe_size]
+    return output
+  end
 
-  # Flushes all other properties
+  # Flushes all drp properties
   # @return [String] xtfsutil output
-  def flush_all
+  def flush_drp
     output = xtfsutil [
       '--set-drp', 
       '--replication-policy', resource[:policy], 

@@ -5,10 +5,10 @@ xtreemfs
 [![GitHub Issues](https://img.shields.io/github/issues/wavesoftware/puppet-xtreemfs.svg)](https://github.com/wavesoftware/puppet-xtreemfs/issues)  [![Puppet Forge](https://img.shields.io/puppetforge/v/wavesoftware/xtreemfs.svg)](https://forge.puppetlabs.com/wavesoftware/xtreemfs) [![GitHub Release](https://img.shields.io/github/release/wavesoftware/puppet-xtreemfs.svg)](https://github.com/wavesoftware/puppet-xtreemfs/releases) [![Apache 2.0 License](http://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://raw.githubusercontent.com/wavesoftware/puppet-xtreemfs/develop/LICENSE)
 
 ##### Master (stable) branch
-[![Build Status](https://img.shields.io/travis/wavesoftware/puppet-xtreemfs/master.svg)](https://travis-ci.org/wavesoftware/puppet-xtreemfs) [![Build Status](http://jenkins-ro.wavesoftware.pl/buildStatus/icon?job=puppet-xtreemfs-acceptace-centos65-stable)](http://jenkins-ro.wavesoftware.pl/job/puppet-xtreemfs-acceptace-centos65-stable/) [![Coverage Status](https://img.shields.io/coveralls/wavesoftware/puppet-xtreemfs/master.svg)](https://coveralls.io/r/wavesoftware/puppet-xtreemfs?branch=master) [![Code Climate](https://codeclimate.com/github/wavesoftware/puppet-xtreemfs/badges/gpa.svg?branch=master)](https://codeclimate.com/github/wavesoftware/puppet-xtreemfs) [![Inline docs](http://inch-ci.org/github/wavesoftware/puppet-xtreemfs.svg?branch=master)](http://inch-ci.org/github/wavesoftware/puppet-xtreemfs)
+[![Build Status](https://img.shields.io/travis/wavesoftware/puppet-xtreemfs/master.svg)](https://travis-ci.org/wavesoftware/puppet-xtreemfs) [![Coverage Status](https://img.shields.io/coveralls/wavesoftware/puppet-xtreemfs/master.svg)](https://coveralls.io/r/wavesoftware/puppet-xtreemfs?branch=master) [![Code Climate](https://codeclimate.com/github/wavesoftware/puppet-xtreemfs/badges/gpa.svg?branch=master)](https://codeclimate.com/github/wavesoftware/puppet-xtreemfs) [![Inline docs](http://inch-ci.org/github/wavesoftware/puppet-xtreemfs.svg?branch=master)](http://inch-ci.org/github/wavesoftware/puppet-xtreemfs)
 
 ##### Development branch
-[![Build Status](https://img.shields.io/travis/wavesoftware/puppet-xtreemfs/develop.svg)](https://travis-ci.org/wavesoftware/puppet-xtreemfs) [![Build Status](http://jenkins-ro.wavesoftware.pl/buildStatus/icon?job=puppet-xtreemfs-acceptace-centos65)](http://jenkins-ro.wavesoftware.pl/job/puppet-xtreemfs-acceptace-centos65/) [![Dependency Status](https://gemnasium.com/wavesoftware/puppet-xtreemfs.svg)](https://gemnasium.com/wavesoftware/puppet-xtreemfs) [![Coverage Status](https://img.shields.io/coveralls/wavesoftware/puppet-xtreemfs/develop.svg)](https://coveralls.io/r/wavesoftware/puppet-xtreemfs?branch=develop) [![Code Climate](https://codeclimate.com/github/wavesoftware/puppet-xtreemfs/badges/gpa.svg?branch=develop)](https://codeclimate.com/github/wavesoftware/puppet-xtreemfs) [![Inline docs](http://inch-ci.org/github/wavesoftware/puppet-xtreemfs.svg?branch=develop)](http://inch-ci.org/github/wavesoftware/puppet-xtreemfs) 
+[![Build Status](https://img.shields.io/travis/wavesoftware/puppet-xtreemfs/develop.svg)](https://travis-ci.org/wavesoftware/puppet-xtreemfs) [![Dependency Status](https://gemnasium.com/wavesoftware/puppet-xtreemfs.svg)](https://gemnasium.com/wavesoftware/puppet-xtreemfs) [![Coverage Status](https://img.shields.io/coveralls/wavesoftware/puppet-xtreemfs/develop.svg)](https://coveralls.io/r/wavesoftware/puppet-xtreemfs?branch=develop) [![Code Climate](https://codeclimate.com/github/wavesoftware/puppet-xtreemfs/badges/gpa.svg?branch=develop)](https://codeclimate.com/github/wavesoftware/puppet-xtreemfs) [![Inline docs](http://inch-ci.org/github/wavesoftware/puppet-xtreemfs.svg?branch=develop)](http://inch-ci.org/github/wavesoftware/puppet-xtreemfs) 
 
 Table of Contents
 -----------------
@@ -152,8 +152,11 @@ To automatically replicate new files in XtreemFS mount point you can set a polic
 
 ```puppet
 xtreemfs::policy { '/mnt/xtreemfs':
-  policy  => 'WqRq',
-  factor  => 2,      # Required storage nodes
+  policy          => 'WqRq',  # Replicate policy
+  factor          => 2,       # Required storage nodes
+  striping_policy => 'RAID0', # Actually only one supported by XtreemFS
+  stripe_count    => 1,       # Number of storage servers used for striping
+  stripe_size     => 128,     # The size of an individual stripe in KiB
 }
 ```
 

@@ -83,15 +83,107 @@ module Provider
     # @return [nil]
     def flush
       validate
-      flush_all
+      flush_dsp if dsp_chaned?
+      flush_drp if drp_chaned?
       flush_policy
       flush_factor
       return nil
     end
+    
+    # A replicate policy getter
+    #
+    # @return [Symbol] a policy
+    def policy
+      @property_hash[:policy] || nil
+    end
 
-    # Flushes all other properties
+    # A replicate factor getter
+    #
+    # @return [String] a factor
+    def factor
+      @property_hash[:factor] || nil
+    end
+    
+    # A striping policy getter
+    #
+    # @return [Symbol] a striping policy 
+    def striping_policy
+      @property_hash[:striping_policy] || nil
+    end
+    
+    # A stripe count getter
+    #
+    # @return [Integer] a stripe count 
+    def stripe_count
+      @property_hash[:stripe_count] || nil
+    end
+    
+    # A stripe size getter
+    #
+    # @return [Integer] a stripe size 
+    def stripe_size
+      @property_hash[:stripe_size] || nil
+    end
+
+    # A policy setter
+    #
+    # @param value [String] a policy
+    # @return [String] a policy
+    def policy= value
+      validate
+      @property_flush[:policy] = value
+    end
+
+    # A factor setter
+    #
+    # @param value [String] a factor
+    # @return [String] a factor
+    def factor= value
+      validate
+      @property_flush[:factor] = value
+    end
+    
+    # A striping policy setter
+    #
+    # @param value [Symbol] a striping policy
+    # @return [Symbol] a striping policy 
+    def striping_policy= value
+      @property_flush[:striping_policy] = value
+    end
+    
+    # A stripe count setter
+    #
+    # @param value [Integer] a stripe count
+    # @return [Integer] a stripe count 
+    def stripe_count= value
+    @property_flush[:stripe_count] = value
+    end
+    
+    # A stripe size setter
+    #
+    # @param value [Integer] a stripe size
+    # @return [Integer] a stripe size 
+    def stripe_size= value
+      @property_flush[:stripe_size] = value
+    end
+    
+    # Actually sets a policy to the OS
+    #
+    # @return [String] a command output
+    def set_policy
+      # do nothing here
+      return nil    
+    end
+
+    # Flushes all dsp properties
     # @return [nil] nothing
-    def flush_all
+    def flush_dsp
+      return nil
+    end
+
+    # Flushes all drp properties
+    # @return [nil] nothing
+    def flush_drp
       return nil
     end
 
@@ -121,37 +213,25 @@ module Provider
       end
       return nil
     end
-
-    # A policy getter
-    #
-    # @return [String] a policy
-    def policy
-      @property_hash[:policy] || nil
+    
+    private
+    
+    def properties_changed(properties)
+      changed = false
+      properties.each do |sym|
+        unless resource.parameter(sym).nil?
+          changed = true if @property_flush[sym] != resource[sym]
+        end 
+      end
+      changed
     end
-
-    # A factor getter
-    #
-    # @return [String] a factor
-    def factor
-      @property_hash[:factor] || nil
+    
+    def dsp_chaned?
+      properties_changed [:striping_policy, :stripe_count, :stripe_size]
     end
-
-    # A policy setter
-    #
-    # @param value [String] a policy
-    # @return [String] a policy
-    def policy= value
-      validate
-      @property_flush[:policy] = value
-    end
-
-    # A factor setter
-    #
-    # @param value [String] a factor
-    # @return [String] a factor
-    def factor= value
-      validate
-      @property_flush[:factor] = value
+    
+    def drp_chaned?
+      properties_changed [:policy, :factor]
     end
 
   end

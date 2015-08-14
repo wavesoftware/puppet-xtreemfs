@@ -17,6 +17,18 @@ Puppet::Type.newtype :xtreemfs_policy do
     Puppet_X::Wavesoftware::Xtreemfs::Type::Replicable.configure_policy(self)
   end
 
+  newproperty :striping_policy do
+    Puppet_X::Wavesoftware::Xtreemfs::Type::Replicable.configure_striping_policy(self)
+  end
+
+  newproperty :stripe_count do
+    Puppet_X::Wavesoftware::Xtreemfs::Type::Replicable.configure_stripe_count(self)
+  end
+
+  newproperty :stripe_size do
+    Puppet_X::Wavesoftware::Xtreemfs::Type::Replicable.configure_stripe_size(self)
+  end
+
   Puppet_X::Wavesoftware::Xtreemfs::Type::Replicable.configure_global_validation(self)
 
   validate do
