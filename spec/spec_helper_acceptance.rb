@@ -5,6 +5,7 @@ unless ENV['RS_PROVISION'] == 'no' or ENV['BEAKER_provision'] == 'no'
 
   hosts.each do |host|
     install_package host, 'wget'
+    install_package host, 'tar'
   end
 
   puppetver = if RUBY_VERSION < '1.9.0' then '2.7.26' else ENV['PUPPET_VERSION'] end
