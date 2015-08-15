@@ -2,7 +2,7 @@ xtreemfs
 ========
 
 ##### Status Info
-[![GitHub Issues](https://img.shields.io/github/issues/wavesoftware/puppet-xtreemfs.svg)](https://github.com/wavesoftware/puppet-xtreemfs/issues)  [![Puppet Forge](https://img.shields.io/puppetforge/v/wavesoftware/xtreemfs.svg)](https://forge.puppetlabs.com/wavesoftware/xtreemfs) [![GitHub Release](https://img.shields.io/github/release/wavesoftware/puppet-xtreemfs.svg)](https://github.com/wavesoftware/puppet-xtreemfs/releases) [![Apache 2.0 License](http://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://raw.githubusercontent.com/wavesoftware/puppet-xtreemfs/develop/LICENSE)
+[![GitHub Issues](https://img.shields.io/github/issues/wavesoftware/puppet-xtreemfs.svg)](https://github.com/wavesoftware/puppet-xtreemfs/issues)  [![Puppet Forge](https://img.shields.io/puppetforge/v/wavesoftware/xtreemfs.svg)](https://forge.puppetlabs.com/wavesoftware/xtreemfs) [![Apache 2.0 License](http://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://raw.githubusercontent.com/wavesoftware/puppet-xtreemfs/develop/LICENSE)
 
 ##### Master (stable) branch
 [![Build Status](https://img.shields.io/travis/wavesoftware/puppet-xtreemfs/master.svg)](https://travis-ci.org/wavesoftware/puppet-xtreemfs) [![Coverage Status](https://img.shields.io/coveralls/wavesoftware/puppet-xtreemfs/master.svg)](https://coveralls.io/r/wavesoftware/puppet-xtreemfs?branch=master) [![Code Climate](https://codeclimate.com/github/wavesoftware/puppet-xtreemfs/badges/gpa.svg?branch=master)](https://codeclimate.com/github/wavesoftware/puppet-xtreemfs) [![Inline docs](http://inch-ci.org/github/wavesoftware/puppet-xtreemfs.svg?branch=master)](http://inch-ci.org/github/wavesoftware/puppet-xtreemfs)
