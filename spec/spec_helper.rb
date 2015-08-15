@@ -4,21 +4,30 @@ require 'rspec/its'
 begin
   gem 'simplecov'
   require 'simplecov'
+  formatters = []
+  formatters << SimpleCov::Formatter::HTMLFormatter
+
+  begin
+    gem 'coveralls'
+    require 'coveralls'
+    formatters << Coveralls::SimpleCov::Formatter if ENV['TRAVIS']
+  rescue Gem::LoadError
+    # do nothing
+  end
+
+  begin
+    gem 'codeclimate-test-reporter'
+    require 'codeclimate-test-reporter'
+    formatters << CodeClimate::TestReporter::Formatter if (ENV['TRAVIS'] and ENV['CODECLIMATE_REPO_TOKEN'])
+  rescue Gem::LoadError
+    # do nothing
+  end
+  SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[*formatters]
   SimpleCov.start do
     add_filter "/spec/"
     add_filter "/.vendor/"
     add_filter "/vendor/"
     add_filter "/gems/"
-  end
-rescue Gem::LoadError
-  # do nothing
-end
-
-begin
-  gem 'coveralls'
-  require 'coveralls'  
-  if ENV['TRAVIS']
-    Coveralls.wear!
   end
 rescue Gem::LoadError
   # do nothing
