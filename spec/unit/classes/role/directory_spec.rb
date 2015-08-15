@@ -60,7 +60,7 @@ describe 'xtreemfs::role::directory', :type => :class do
       it { should contain_class('apt') }
       it { should contain_class('apt::update') }
       it { should contain_class('apt::params') }
-      it { should contain_anchor('apt_key 07D6EA4F2FA7E736 present') }
+      it { should contain_anchor('apt_key 19C11DC839B85E41B93F4E8207D6EA4F2FA7E736 present') }
       
       # Dodgy deps :-/
       it { should contain_file('sources.list.d') }

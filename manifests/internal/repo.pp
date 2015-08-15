@@ -16,14 +16,15 @@ class xtreemfs::internal::repo {
       }
     }
     'Debian': {
+      $key_uri = "${repo}/Release.key"
       apt::source { 'xtreemfs':
         ensure      => 'present',
         release     => '',
         location    => $repo,
         repos       => './',
         include_src => false,
-        key         => $xtreemfs::settings::key,
-        key_source  => "${repo}/Release.key",
+        key         => xtreemfs_download_gpg($key_uri, $xtreemfs::settings::buckup_key),
+        key_source  => $key_uri,
         key_server  => undef,
       }
       include apt

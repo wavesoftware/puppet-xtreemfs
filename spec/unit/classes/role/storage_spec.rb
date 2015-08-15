@@ -17,8 +17,8 @@ describe 'xtreemfs::role::storage', :type => :class do
     it { should contain_package('xtreemfs-server') }
     it { should contain_anchor('xtreemfs::repo') }
     it { should contain_exec('apt_update').that_comes_before('Anchor[xtreemfs::repo]') }
-    it { should contain_apt_key('Add key: 07D6EA4F2FA7E736 from Apt::Source xtreemfs') }
-    it { should contain_apt__key('Add key: 07D6EA4F2FA7E736 from Apt::Source xtreemfs') }
+    it { should contain_apt_key('Add key: 19C11DC839B85E41B93F4E8207D6EA4F2FA7E736 from Apt::Source xtreemfs') }
+    it { should contain_apt__key('Add key: 19C11DC839B85E41B93F4E8207D6EA4F2FA7E736 from Apt::Source xtreemfs') }
     it { should contain_file('/var/lib/xtreemfs') }
     it do
       should contain_apt__source('xtreemfs').with(
