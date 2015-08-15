@@ -48,7 +48,7 @@ class xtreemfs::role::metadata (
     enable     => true,
     hasrestart => true,
     hasstatus  => true,
-    subscribe  => Anchor[$xtreemfs::internal::workflow::configure],
+    subscribe  => Anchor[$xtreemfs::internal::configure::metadata::anchor],
     before     => Anchor[$xtreemfs::internal::workflow::service],
   }
 }

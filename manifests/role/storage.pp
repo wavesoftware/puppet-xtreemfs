@@ -53,7 +53,7 @@ class xtreemfs::role::storage (
     enable     => true,
     hasrestart => true,
     hasstatus  => true,
-    subscribe  => Anchor[$xtreemfs::internal::workflow::configure],
+    subscribe  => Anchor[$xtreemfs::internal::configure::storage::anchor],
     before     => Anchor[$xtreemfs::internal::workflow::service],
   }
 }

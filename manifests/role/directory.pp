@@ -36,7 +36,7 @@ class xtreemfs::role::directory (
     enable     => true,
     hasrestart => true,
     hasstatus  => true,
-    subscribe  => Anchor[$xtreemfs::internal::workflow::configure],
+    subscribe  => Anchor[$xtreemfs::internal::configure::directory::anchor],
     before     => Anchor[$xtreemfs::internal::workflow::service],
   }
 }

@@ -4,6 +4,6 @@ HOSTS:
       - master
     platform: debian-7-amd64
     image: debian:7
-    hypervisor : vagrant
+    hypervisor: docker
 CONFIG:
   type: foss

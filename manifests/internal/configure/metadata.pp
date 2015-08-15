@@ -7,6 +7,7 @@ class xtreemfs::internal::configure::metadata (
   
   $this_changes = ["set dir_service.host ${dir_service}"]
   $changes = properties_to_augeas($properties, $this_changes)
+  $anchor  = 'xtreemfs::internal::configure::metadata'
 
   $configfile = '/etc/xos/xtreemfs/mrcconfig.properties'
   augeas { 'xtreemfs::configure::mrc':
@@ -15,6 +16,10 @@ class xtreemfs::internal::configure::metadata (
     incl    => $configfile,
     lens    => 'Properties.lns',
     require => Anchor[$xtreemfs::internal::workflow::packages],
-    notify  => Anchor[$xtreemfs::internal::workflow::configure],
+    notify  => Anchor[$anchor],
+  }
+  
+  anchor { $anchor:
+    notify => Anchor[$xtreemfs::internal::workflow::configure],
   }
 }

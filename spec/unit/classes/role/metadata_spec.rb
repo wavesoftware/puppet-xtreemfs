@@ -63,8 +63,9 @@ describe 'xtreemfs::role::metadata', :type => :class do
         should contain_augeas('xtreemfs::configure::mrc').that_requires('Anchor[xtreemfs::packages]')
       end
       it 'should contains augeas[..::mrc] that notifies Anchor[..::configure]' do
-        should contain_augeas('xtreemfs::configure::mrc').that_notifies('Anchor[xtreemfs::configure]')
+        should contain_augeas('xtreemfs::configure::mrc').that_notifies('Anchor[xtreemfs::internal::configure::metadata]')
       end
+      it { should contain_anchor('xtreemfs::internal::configure::metadata') }
     end
     context 'with default params' do
       it do 

@@ -9,7 +9,7 @@ class xtreemfs::internal::workflow {
   
   anchor { $repo: } ->
   anchor { $packages: } ->
-  anchor { $configure: } ~>
+  anchor { $configure: } ->
   anchor { $service: } ->
   anchor { $end: }
   

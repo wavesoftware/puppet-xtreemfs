@@ -101,6 +101,8 @@ describe 'xtreemfs::role::directory', :type => :class do
         'hasstatus'  => true
       )
     end
+    it { should contain_augeas('xtreemfs::configure::directory').that_notifies('Anchor[xtreemfs::internal::configure::directory]')}
+    it { should contain_anchor('xtreemfs::internal::configure::directory') }
     context 'with params specified: install_packages => false' do
       let :params do
         { :install_packages => false }

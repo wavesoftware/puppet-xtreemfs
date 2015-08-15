@@ -64,8 +64,8 @@ describe 'xtreemfs::replicate', :type => :define do
       let :params do 
         { :policy => 'qazwsxedc' }
       end
-      it 'should not compile' do
-        expect { should compile }.to raise_error
+      it do
+        expect { should compile }.to raise_error(/Invalid value "qazwsxedc". Valid values are none, ronly, readonly, WqRq, quorum, WaR1, all/)
       end
     end
   end
@@ -74,24 +74,24 @@ describe 'xtreemfs::replicate', :type => :define do
       let :params do 
         { :factor => 0 }
       end
-      it 'should not compile' do
-        expect { should compile }.to raise_error
+      it do
+        expect { should compile }.to raise_error(/The replication factor must be integer value, that is greater or equal to 1/)
       end
     end
     context 'factor that equals -2' do
       let :params do 
         { :factor => -2 }
       end
-      it 'should not compile' do
-        expect { should compile }.to raise_error
+      it do
+        expect { should compile }.to raise_error(/The replication factor must be integer value, that is greater or equal to 1/)
       end
     end
     context 'factor that equals qaz' do
       let :params do 
         { :factor => 'qaz' }
       end
-      it 'should not compile' do
-        expect { should compile }.to raise_error
+      it do
+        expect { should compile }.to raise_error(/The replication factor must be integer value, that is greater or equal to 1/)
       end
     end
   end

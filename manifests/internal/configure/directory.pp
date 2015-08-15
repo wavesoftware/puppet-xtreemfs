@@ -5,6 +5,7 @@ class xtreemfs::internal::configure::directory (
   include xtreemfs::internal::workflow
 
   $changes = properties_to_augeas($properties, [])
+  $anchor  = 'xtreemfs::internal::configure::directory'
 
   $configfile = '/etc/xos/xtreemfs/dirconfig.properties'
   augeas { 'xtreemfs::configure::directory':
@@ -13,6 +14,10 @@ class xtreemfs::internal::configure::directory (
     incl    => $configfile,
     lens    => 'Properties.lns',
     require => Anchor[$xtreemfs::internal::workflow::packages],
-    notify  => Anchor[$xtreemfs::internal::workflow::configure],
+    notify  => Anchor[$anchor],
+  }
+  
+  anchor { $anchor:
+    notify => Anchor[$xtreemfs::internal::workflow::configure],
   }
 }

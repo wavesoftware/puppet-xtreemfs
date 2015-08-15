@@ -1,6 +1,10 @@
 {
   "excludes": [
     "**/contrib/**",
+    "**/coverage/**",
+    "**/log/**",
+    "**/.vagrant/**",
+    "**/junit/**",
     "**/examples/**",
     "**/vendor/**",
     "**/.vendor/**",

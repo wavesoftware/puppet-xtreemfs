@@ -11,6 +11,7 @@ class xtreemfs::internal::configure::storage (
     "set object_dir ${object_dir}/objs/",
   ]
   $changes = properties_to_augeas($properties, $this_changes)
+  $anchor  = 'xtreemfs::internal::configure::storage'
 
   $configfile = '/etc/xos/xtreemfs/osdconfig.properties'
   augeas { 'xtreemfs::configure::osd':
@@ -19,7 +20,7 @@ class xtreemfs::internal::configure::storage (
     incl    => $configfile,
     lens    => 'Properties.lns',
     require => Anchor[$xtreemfs::internal::workflow::packages],
-    notify  => Anchor[$xtreemfs::internal::workflow::configure],
+    notify  => Anchor[$anchor],
   }
   
   file { $object_dir:
@@ -27,6 +28,10 @@ class xtreemfs::internal::configure::storage (
     owner   => 'xtreemfs',
     group   => 'xtreemfs',
     require => Anchor[$xtreemfs::internal::workflow::packages],
-    notify  => Anchor[$xtreemfs::internal::workflow::configure],
+    notify  => Anchor[$anchor],
+  }
+  
+  anchor { $anchor:
+    notify => Anchor[$xtreemfs::internal::workflow::configure],
   }
 }
