@@ -1,9 +1,9 @@
 HOSTS:
-  ubuntu-server-1404-x64-docker:
+  debian-8-x64-docker:
     roles:
       - master
-    platform: ubuntu-14.04-amd64
-    image: ubuntu:14.04
+    platform: debian-8-amd64
+    image: debian:8
     hypervisor: docker
     docker_preserve_image: true
 CONFIG:

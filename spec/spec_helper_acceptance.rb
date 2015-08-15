@@ -3,6 +3,10 @@ require 'beaker-rspec/helpers/serverspec'
 
 unless ENV['RS_PROVISION'] == 'no' or ENV['BEAKER_provision'] == 'no'
 
+  hosts.each do |host|
+    install_package host, 'wget'
+  end
+
   puppetver = if RUBY_VERSION < '1.9.0' then '2.7.26' else ENV['PUPPET_VERSION'] end
   facterver = ENV['FACTER_VERSION']
   # This will install the latest available package on el and deb based
@@ -19,13 +23,6 @@ unless ENV['RS_PROVISION'] == 'no' or ENV['BEAKER_provision'] == 'no'
 
   hosts.each do |host|
     shell("mkdir -p #{host['distmoduledir']}")
-    if ! host.is_pe?
-      # Augeas is only used in one place, for Redhat.
-      if fact('osfamily') == 'RedHat'
-        install_package host, 'ruby-devel'
-        install_package host, 'tar'
-      end
-    end
   end
 end
 
@@ -44,6 +41,7 @@ RSpec.configure do |c|
       on host, "/bin/touch #{default['puppetpath']}/hiera.yaml"
       on host, 'chmod 755 /root'
       if fact('osfamily') == 'Debian'
+        install_package host, 'locales'
         on host, "echo \"en_US ISO-8859-1\nen_US.UTF-8 UTF-8\n\" > /etc/locale.gen"
         on host, '/usr/sbin/locale-gen'
         on host, '/usr/sbin/update-locale'
