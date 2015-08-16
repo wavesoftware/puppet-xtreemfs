@@ -16,22 +16,21 @@ class Functions
     raise(Puppet::ParseError, "xtreemfs_download_gpg(): Wrong number of arguments " +
       "given (#{args.size} for 1..2)") if args.size != 1 and args.size != 2
     begin
-      f = Tempfile.new 'xtreemfs_download_gpg'
       address, default_value = args
       require 'net/http'
       require 'tempfile'
       uri = URI.parse(address)
       key = Net::HTTP::get(uri)
+      f = Tempfile.new 'xtreemfs_download_gpg'
       f.write(key)
       f.flush
       lines = self.execute("gpg --with-fingerprint #{f.path}")
+      f.unlink
       raise lines unless self.last_exec_status.success?
       last_line = lines.split("\n")[-1]
       last_line.split(/\s+=\s+/)[-1].gsub(' ', '')
     rescue
       default_value
-    ensure
-      f.unlink
     end
   end
 
