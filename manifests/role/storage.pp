@@ -56,4 +56,10 @@ class xtreemfs::role::storage (
     subscribe  => Anchor[$xtreemfs::internal::configure::storage::anchor],
     before     => Anchor[$xtreemfs::internal::workflow::service],
   }
+  
+  xtreemfs_waitforport { "osd-port-${xtreemfs::internal::configure::storage::port}":
+    open    => $xtreemfs::internal::configure::storage::port,
+    require => Service['xtreemfs-osd'],
+    before  => Anchor[$xtreemfs::internal::workflow::service], 
+  }
 }

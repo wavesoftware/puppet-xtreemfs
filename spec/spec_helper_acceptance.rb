@@ -24,6 +24,16 @@ unless ENV['RS_PROVISION'] == 'no' or ENV['BEAKER_provision'] == 'no'
 
   hosts.each do |host|
     shell("mkdir -p #{host['distmoduledir']}")
+    pp = %q{
+      augeas { '/etc/puppet/puppet.conf':
+        context => '/files/etc/puppet/puppet.conf',
+        changes => [
+          'rm main/templatedir',
+          'set main/show_diff true'
+        ],
+      }
+    }
+    apply_manifest_on host, pp
   end
 end
 

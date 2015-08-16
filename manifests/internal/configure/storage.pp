@@ -3,14 +3,19 @@ class xtreemfs::internal::configure::storage (
   $dir_service,
   $object_dir,
   $properties,
+  $port = 32640,
 ) {
   include xtreemfs::internal::workflow
+  include xtreemfs::internal::configure::augeas::verify
 
   $this_changes = [
     "set dir_service.host ${dir_service}",
     "set object_dir ${object_dir}/objs/",
   ]
-  $changes = properties_to_augeas($properties, $this_changes)
+  $merged  = merge({
+    'listen.port' => $port
+  }, $properties)
+  $changes = properties_to_augeas($merged, $this_changes)
   $anchor  = 'xtreemfs::internal::configure::storage'
 
   $configfile = '/etc/xos/xtreemfs/osdconfig.properties'

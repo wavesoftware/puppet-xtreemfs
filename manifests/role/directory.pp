@@ -39,4 +39,10 @@ class xtreemfs::role::directory (
     subscribe  => Anchor[$xtreemfs::internal::configure::directory::anchor],
     before     => Anchor[$xtreemfs::internal::workflow::service],
   }
+
+  xtreemfs_waitforport { "dir-port-${xtreemfs::internal::configure::directory::port}":
+    open    => $xtreemfs::internal::configure::directory::port,
+    require => Service['xtreemfs-dir'],
+    before  => Anchor[$xtreemfs::internal::workflow::service], 
+  }
 }

@@ -19,7 +19,7 @@ describe 'xtreemfs::volume define', :unless => UNSUPPORTED_PLATFORMS.include?(fa
       apply_manifest(pp, :catch_failures => true)
     end
     it 'should not make any changes when executed twice' do
-      apply_manifest(pp, :expect_changes => false)
+      apply_manifest(pp, :catch_changes => true)
     end
     
   end
@@ -42,7 +42,7 @@ describe 'xtreemfs::volume define', :unless => UNSUPPORTED_PLATFORMS.include?(fa
       apply_manifest(pp, :catch_failures => true)
     end
     it 'should not make any changes when executed twice' do
-      apply_manifest(pp, :expect_changes => false)
+      apply_manifest(pp, :catch_changes => true)
     end
   end
 
@@ -71,7 +71,7 @@ describe 'xtreemfs::volume define', :unless => UNSUPPORTED_PLATFORMS.include?(fa
       apply_manifest(pp, :catch_failures => true)
     end
     it 'should not make any changes when executed twice' do
-      apply_manifest(pp, :expect_changes => false)
+      apply_manifest(pp, :catch_changes => true)
     end
     
   end
@@ -100,7 +100,7 @@ describe 'xtreemfs::volume define', :unless => UNSUPPORTED_PLATFORMS.include?(fa
       apply_manifest(pp, :catch_failures => true)
     end
     it 'should not make any changes when executed twice' do
-      apply_manifest(pp, :expect_changes => false)
+      apply_manifest(pp, :catch_changes => true)
     end
   end
 

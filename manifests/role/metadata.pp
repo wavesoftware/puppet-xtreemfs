@@ -51,4 +51,10 @@ class xtreemfs::role::metadata (
     subscribe  => Anchor[$xtreemfs::internal::configure::metadata::anchor],
     before     => Anchor[$xtreemfs::internal::workflow::service],
   }
+  
+  xtreemfs_waitforport { "mrc-port-${xtreemfs::internal::configure::metadata::port}":
+    open    => $xtreemfs::internal::configure::metadata::port,
+    require => Service['xtreemfs-mrc'],
+    before  => Anchor[$xtreemfs::internal::workflow::service], 
+  }
 }

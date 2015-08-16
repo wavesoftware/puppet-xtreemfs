@@ -41,7 +41,7 @@ describe 'xtreemfs::mount define', :unless => UNSUPPORTED_PLATFORMS.include?(fac
       apply_manifest(pp, :catch_failures => true)
     end
     it 'should not make any changes when executed twice' do
-      apply_manifest(pp, :expect_changes => false)
+      apply_manifest(pp, :catch_changes => true)
     end
     it 'should be mounted' do
       shell 'mount | grep /mnt/xtreemfs-myvolume'
@@ -77,7 +77,7 @@ describe 'xtreemfs::mount define', :unless => UNSUPPORTED_PLATFORMS.include?(fac
       apply_manifest(pp, :catch_failures => true)
     end
     it 'should not make any changes when executed twice' do
-      apply_manifest(pp, :expect_changes => false)
+      apply_manifest(pp, :catch_changes => true)
     end
   end
 end

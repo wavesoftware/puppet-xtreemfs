@@ -17,7 +17,7 @@ describe 'xtreemfs::role::metadata class', :unless => UNSUPPORTED_PLATFORMS.incl
       apply_manifest(pp, :catch_failures => true)
     end
     it 'should not make any changes when executed twice' do
-      apply_manifest(pp, :expect_changes => false)
+      apply_manifest(pp, :catch_changes => true)
     end
     describe service('xtreemfs-mrc') do 
       it { should be_running }

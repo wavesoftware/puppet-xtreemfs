@@ -2,11 +2,16 @@
 class xtreemfs::internal::configure::metadata (
   $dir_service,
   $properties,
+  $port = 32636,
 ) {
   include xtreemfs::internal::workflow
+  include xtreemfs::internal::configure::augeas::verify
   
   $this_changes = ["set dir_service.host ${dir_service}"]
-  $changes = properties_to_augeas($properties, $this_changes)
+  $merged  = merge({
+    'listen.port' => $port
+  }, $properties)
+  $changes = properties_to_augeas($merged, $this_changes)
   $anchor  = 'xtreemfs::internal::configure::metadata'
 
   $configfile = '/etc/xos/xtreemfs/mrcconfig.properties'

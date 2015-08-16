@@ -1,10 +1,14 @@
 # INTERNAL PRIVATE CLASS: do not use directly!
 class xtreemfs::internal::configure::directory (
   $properties,
+  $port = 32638,
 ) {
   include xtreemfs::internal::workflow
-
-  $changes = properties_to_augeas($properties, [])
+  include xtreemfs::internal::configure::augeas::verify
+  $merged  = merge({
+    'listen.port' => $port
+  }, $properties)
+  $changes = properties_to_augeas($merged, [])
   $anchor  = 'xtreemfs::internal::configure::directory'
 
   $configfile = '/etc/xos/xtreemfs/dirconfig.properties'
