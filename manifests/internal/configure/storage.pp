@@ -22,7 +22,7 @@ class xtreemfs::internal::configure::storage (
     require => Anchor[$xtreemfs::internal::workflow::packages],
     notify  => Anchor[$anchor],
   }
-  
+
   file { $object_dir:
     ensure  => 'directory',
     owner   => 'xtreemfs',
@@ -30,7 +30,7 @@ class xtreemfs::internal::configure::storage (
     require => Anchor[$xtreemfs::internal::workflow::packages],
     notify  => Anchor[$anchor],
   }
-  
+
   anchor { $anchor:
     notify => Anchor[$xtreemfs::internal::workflow::configure],
   }

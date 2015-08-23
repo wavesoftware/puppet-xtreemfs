@@ -2,9 +2,9 @@
 class xtreemfs::internal::repo {
   include xtreemfs::internal::workflow
   include xtreemfs::settings
-  
+
   $repo = "${xtreemfs::settings::repobase}/${xtreemfs::settings::flavour}"
-  
+
   case $::osfamily {
     /RedHat|Suse/: {
       yumrepo { 'xtreemfs':
@@ -17,13 +17,14 @@ class xtreemfs::internal::repo {
     }
     'Debian': {
       $key_uri = "${repo}/Release.key"
+      $key = xtreemfs_download_gpg($key_uri, $xtreemfs::settings::buckup_key)
       apt::source { 'xtreemfs':
         ensure      => 'present',
         release     => '',
         location    => $repo,
         repos       => './',
         include_src => false,
-        key         => xtreemfs_download_gpg($key_uri, $xtreemfs::settings::buckup_key),
+        key         => $key,
         key_source  => $key_uri,
         key_server  => undef,
       }
@@ -35,5 +36,5 @@ class xtreemfs::internal::repo {
       fail("Unsupported operation system family: ${::osfamily}")
     }
   }
-  
+
 }

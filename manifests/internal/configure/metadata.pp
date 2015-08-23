@@ -4,7 +4,7 @@ class xtreemfs::internal::configure::metadata (
   $properties,
 ) {
   include xtreemfs::internal::workflow
-  
+
   $this_changes = ["set dir_service.host ${dir_service}"]
   $changes = properties_to_augeas($properties, $this_changes)
   $anchor  = 'xtreemfs::internal::configure::metadata'
@@ -18,7 +18,7 @@ class xtreemfs::internal::configure::metadata (
     require => Anchor[$xtreemfs::internal::workflow::packages],
     notify  => Anchor[$anchor],
   }
-  
+
   anchor { $anchor:
     notify => Anchor[$xtreemfs::internal::workflow::configure],
   }

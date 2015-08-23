@@ -16,7 +16,7 @@ class xtreemfs::internal::configure::directory (
     require => Anchor[$xtreemfs::internal::workflow::packages],
     notify  => Anchor[$anchor],
   }
-  
+
   anchor { $anchor:
     notify => Anchor[$xtreemfs::internal::workflow::configure],
   }

@@ -16,12 +16,15 @@
 #     [+none+]
 #         File is not replicated.
 #     [+ronly+]
-#         (+readonly+) File is read-only replicated and will be marked as read-only,
-#         i.e. the file cannot be modified as long as the replication policy is set to ronly.
+#         (+readonly+) File is read-only replicated and will be marked as
+#         read-only, i.e. the file cannot be modified as long as the
+#         replication policy is set to ronly.
 #     [+WqRq+]
-#         (+quorum+), +WaR1+ (+all+) The file will be read-write replicated and can be modified. 
+#         (+quorum+), +WaR1+ (+all+) The file will be read-write replicated
+#         and can be modified. 
 # [*factor*]
-#     A replication factor. Defines on how many OSD servers target file should be replicated.
+#     A replication factor. Defines on how many OSD servers target file
+#     should be replicated.
 define xtreemfs::replicate (
   $policy = 'none',
   $factor = 1,

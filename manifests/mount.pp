@@ -1,6 +1,8 @@
 # == Manages an mount of XtreemFS volume
 #
-# You can create and destroy mount points for XtreemFS volumes. By default it will also add an entry to system fstab, so that mount point will be active at boot time.
+# You can create and destroy mount points for XtreemFS volumes. By default it
+# will also add an entry to system fstab, so that mount point will be active 
+# at boot time.
 #
 # === Parameters:
 #
@@ -9,15 +11,18 @@
 # [*volume*]
 #     A name of volume that is active in directory service
 # [*ensure*]
-#     Standard ensure property. Can be: +mounted+, +unmounted+ (same as +present+) or +absent+
+#     Standard ensure property. Can be: +mounted+, +unmounted+ (same as 
+#     +present+) or +absent+
 # [*dir_host*]
-#     Provide an host to where metadata and storage nodes will be connecting, defaults: <tt>$::fqdn</tt>
+#     Provide an host to where metadata and storage nodes will be connecting, 
+#     defaults: <tt>$::fqdn</tt>
 # [*dir_port*]
 #     (Optional) A port for directory service connection
 # [*dir_protocol*]
 #     (Optional) A protocol for directory service connection
 # [*atboot*]
-#     Should this mount be active also at boot time? If +true+, it will be added to system +/etc/fstab+
+#     Should this mount be active also at boot time? If +true+, it will be 
+#     added to system +/etc/fstab+
 # [*options*]
 #     Mount options for the mounts, as they would appear in the fstab.
 #
@@ -36,8 +41,8 @@ define xtreemfs::mount (
   include xtreemfs::settings
 
   validate_string($options)
-
-  $host = directory_address($dir_host, $dir_port, $dir_protocol, $xtreemfs::settings::dir_service)
+  $dir_service = $xtreemfs::settings::dir_service
+  $host = directory_address($dir_host, $dir_port, $dir_protocol, $dir_service)
 
   if defined(Xtreemfs::Volume[$volume]) {
     if $ensure == 'present' or $ensure == 'mounted' {
