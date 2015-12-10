@@ -222,4 +222,4 @@ To contribute, follow the standard [git flow](http://danielkummer.github.io/git-
 1. Push to the branch (`git push origin feature/my-new-feature`)
 1. Create new Pull Request
 
-Even if you can't contribute code, if you have an idea for an improvement please open an [issue](https://github.com/wavesoftware/xtreemfs/issues).
+Even if you can't contribute code, if you have an idea for an improvement please open an [issue](https://github.com/wavesoftware/puppet-xtreemfs/issues).
